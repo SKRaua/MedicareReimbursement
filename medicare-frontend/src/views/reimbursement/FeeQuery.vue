@@ -58,7 +58,7 @@
                                 <el-table :data="drugList" size="small" stripe empty-text="暂无药品数据">
                                     <el-table-column prop="drugName" label="药品名称" />
                                     <el-table-column prop="specification" label="规格" />
-                                    <el-table-column prop="unit" label="单位" />
+                                    <el-table-column prop="unit" label="单位" width="40" />
                                     <el-table-column prop="manufacturer" label="生产企业" />
                                     <el-table-column prop="price" label="单价" width="80" />
                                     <el-table-column prop="quantity" label="数量" width="60" />

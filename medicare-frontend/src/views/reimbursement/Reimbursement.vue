@@ -48,7 +48,7 @@
                                 <el-table-column align="center" prop="address" label="家庭地址" />
                                 <el-table-column align="center" prop="workStatus" label="工作状态" width="100" />
                                 <el-table-column align="center" prop="contactPhone" label="联系电话" width="130" />
-                                <el-table-column align="center" label="操作" width="160" fixed="right">
+                                <el-table-column align="center" label="操作" width="100" fixed="right">
                                     <template #default="scope">
                                         <el-button link size="small" @click="openDetail(scope.row)"
                                             style="color: #1890ff">
@@ -73,13 +73,13 @@
         </el-container>
 
         <!-- 详情弹窗 -->
-        <el-dialog title="报销详情" v-model="detailDialogVisible" width="700px">
+        <el-dialog title="报销详情" v-model="detailDialogVisible" width="900px">
             <div class="detail-pie-row">
                 <div class="detail-pie-col">
-                    <VueECharts :option="pieOption(detailPieData, '各费用占比')" autoresize style="height:260px;" />
+                    <VueECharts :option="pieOption(detailPieData, '各费用占比')" autoresize style="height:320px;" />
                 </div>
                 <div class="detail-pie-col">
-                    <VueECharts :option="pieOption(detailPieRbData, '报销/自付占比')" autoresize style="height:260px;" />
+                    <VueECharts :option="pieOption(detailPieRbData, '报销/自付占比')" autoresize style="height:320px;" />
                 </div>
             </div>
             <template #footer>
@@ -88,7 +88,7 @@
         </el-dialog>
 
         <!-- 报销弹窗：报销确认页结构 -->
-        <el-dialog title="报销" v-model="reimburseDialogVisible" width="1100px" top="40px">
+        <el-dialog title="报销" v-model="reimburseDialogVisible" width="1400px" top="30px">
             <div class="reimburse-confirm">
                 <!-- 顶部信息 -->
                 <div class="top-info">
@@ -109,10 +109,10 @@
                         </div>
                         <el-table :data="table.data" size="small" stripe
                             style="color: #222;max-height: 220px; overflow-y: auto;">
-                            <el-table-column prop="drugName" label="药品名称" />
-                            <el-table-column prop="unit" label="单位" width="60" />
-                            <el-table-column prop="quantity" label="数量" width="60" />
-                            <el-table-column label="价格" width="80">
+                            <el-table-column prop="drugName" label="药品名称" min-width="120" show-overflow-tooltip />
+                            <el-table-column prop="unit" label="单位" width="50" />
+                            <el-table-column prop="quantity" label="数量" width="50" />
+                            <el-table-column label="价格" width="70">
                                 <template #default="scope">
                                     {{ (scope.row.price * scope.row.quantity).toFixed(2) }}
                                 </template>
@@ -124,10 +124,10 @@
                         <div class="reimburse-table-header">其他项目</div>
                         <el-table :data="serviceAndItemList" size="small" stripe
                             style="color: #222;max-height: 220px; overflow-y: auto;">
-                            <el-table-column prop="itemName" label="项目名称" />
-                            <el-table-column prop="unit" label="单位" width="60" />
-                            <el-table-column prop="quantity" label="数量" width="60" />
-                            <el-table-column label="价格" width="80">
+                            <el-table-column prop="itemName" label="项目名称" min-width="120" show-overflow-tooltip />
+                            <el-table-column prop="unit" label="单位" width="50" />
+                            <el-table-column prop="quantity" label="数量" width="50" />
+                            <el-table-column label="价格" width="70">
                                 <template #default="scope">
                                     {{ (scope.row.price * scope.row.quantity).toFixed(2) }}
                                 </template>
@@ -531,11 +531,11 @@ const handleConfirmRb = async () => {
 
 .top-info {
     margin: 10px 0 18px 0;
-    font-size: 16px;
+    font-size: 14px;
     color: #ad1457;
     display: flex;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 25px;
     align-items: center;
 }
 
@@ -547,7 +547,7 @@ const handleConfirmRb = async () => {
 
 .reimburse-table-row {
     display: flex;
-    gap: 18px;
+    gap: 15px;
     margin-bottom: 24px;
     justify-content: space-between;
 }
@@ -556,38 +556,39 @@ const handleConfirmRb = async () => {
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 1px 4px #f8bbd0;
-    padding: 12px 10px 8px 10px;
-    min-width: 220px;
+    padding: 12px 8px 8px 8px;
+    min-width: 250px;
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
 .reimburse-table-header {
-    font-size: 16px;
+    font-size: 14px;
     color: #ec407a;
     font-weight: bold;
     margin-bottom: 8px;
     letter-spacing: 1px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .ratio-tag {
     background: #f8bbd0;
     color: #ad1457;
     border-radius: 4px;
-    padding: 2px 8px;
-    font-size: 13px;
+    padding: 2px 6px;
+    font-size: 12px;
 }
 
 .fee-tag {
     background: #e1bee7;
     color: #ad1457;
     border-radius: 4px;
-    padding: 2px 8px;
-    font-size: 13px;
+    padding: 2px 6px;
+    font-size: 12px;
 }
 
 .formula-section {

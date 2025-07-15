@@ -56,7 +56,7 @@
                                 <el-table-column align="center" prop="address" label="家庭地址" />
                                 <el-table-column align="center" prop="workStatus" label="工作状态" width="100" />
                                 <el-table-column align="center" prop="contactPhone" label="联系电话" width="130" />
-                                <el-table-column align="center" label="操作" width="160" fixed="right">
+                                <el-table-column align="center" label="操作" width="100" fixed="right">
                                     <template #default="scope">
                                         <el-button link size="small" @click="openEdit(scope.row)"
                                             style="color: #1890ff">
