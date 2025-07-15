@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import com.cqupt.annotation.RequireRole;
 import com.cqupt.dto.DrugRbRatioDTO;
 import com.cqupt.service.DrugRbRatioService;
 import com.cqupt.utils.ResultVo;
@@ -22,6 +23,7 @@ public class DrugRbRatioController {
     @Autowired
     private DrugRbRatioService drugRbRatioService;
 
+    @RequireRole(value = { 1, 2 }, description = "医院操作员和报销管理员可查询")
     @ApiOperation("分页查询")
     @GetMapping("/info")
     @ApiImplicitParams({
@@ -31,6 +33,7 @@ public class DrugRbRatioController {
         return drugRbRatioService.selectDrugRbRatioVoPage(dto);
     }
 
+    @RequireRole(value = { 1, 2 }, description = "医院操作员和报销管理员可查询")
     @GetMapping("/enabledList")
     @ApiOperation("获取正在生效的三种药品类型的报销比例")
     public ResultVo<List<DrugRbRatioVo>> getEnabledDrugRbRatios() {
@@ -38,6 +41,7 @@ public class DrugRbRatioController {
         return ResultVo.ok(list);
     }
 
+    // 其他操作默认只有管理员可以访问
     @ApiOperation("添加药品报销比例")
     @PostMapping("/add")
     public ResultVo<Void> addDrugRbRatio(@RequestBody DrugRbRatioDTO dto) throws Exception {

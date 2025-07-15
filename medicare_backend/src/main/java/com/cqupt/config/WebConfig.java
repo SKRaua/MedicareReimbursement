@@ -10,10 +10,24 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/*
+/**
  * @author Wang Yanchen
  * @date 2025/07/12/08:58:19
- * @description
+ * @description 全局Web配置
+ * 
+ *              权限控制说明：
+ *              - 管理员 (roleId=0): 拥有所有权限，可以访问所有接口
+ *              - 医院操作员 (roleId=1):
+ *              * 所有查询接口
+ *              * DiagnosisController 全部权限
+ *              * DrugOrderController 全部权限
+ *              * InsurederController 全部权限
+ *              * MedicalServiceOrderController 全部权限
+ *              * TreatmentItemOrderController 全部权限
+ *              - 报销管理员 (roleId=2):
+ *              * 所有查询接口
+ *              * InsurederController 全部权限
+ *              * ReimbursementRecordController 全部权限
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -25,22 +39,22 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(@NonNull InterceptorRegistry registry) {
         // 解决跨域问题
-        //WebMvcConfigurer.super.addInterceptors(registry);
+        // WebMvcConfigurer.super.addInterceptors(registry);
         registry.addInterceptor(checkTokenInterceptor)
-                .addPathPatterns("/**")  //拦截所有请求
+                .addPathPatterns("/**") // 拦截所有请求
                 .excludePathPatterns(
-                        "/user/login",  //登录接口放行
-                        "/logout", //登出接口放行
-                        "/static/**", //静态资源放行
-                        "/images/**", //图片资源放行
-                        "favicon.ico",  //网站图标放行
+                        "/user/login", // 登录接口放行
+                        "/captcha", // 验证码接口放行
+                        "/logout", // 登出接口放行
+                        "/static/**", // 静态资源放行
+                        "/images/**", // 图片资源放行
+                        "favicon.ico", // 网站图标放行
                         // 排除Swagger相关路径（关键）
                         "/swagger-ui.html",
                         "/swagger-ui/**",
                         "/v3/api-docs/**",
                         "/swagger-resources/**",
-                        "/webjars/**"
-                );
+                        "/webjars/**");
     }
 
     // 全局跨域配置

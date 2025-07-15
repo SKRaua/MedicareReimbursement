@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import com.cqupt.annotation.RequireRole;
 import com.cqupt.dto.ReimbursementRatioDTO;
 import com.cqupt.service.ReimbursementRatioService;
 import com.cqupt.utils.ResultVo;
@@ -25,6 +26,7 @@ public class ReimbursementRatioController {
     @Autowired
     private ReimbursementRatioService ratioService;
 
+    @RequireRole(value = { 1, 2 }, description = "医院操作员和报销管理员可查询")
     @ApiOperation("信息查询")
     @GetMapping("/info")
     @ApiImplicitParams({
@@ -35,6 +37,7 @@ public class ReimbursementRatioController {
         return ratioService.selectReimbursementRatioPage(ratioDTO);
     }
 
+    // 其他操作默认只有管理员可以访问
     @ApiOperation("添加报销比例")
     @PostMapping("/add")
     public ResultVo<Void> addReimbursementRatio(@RequestBody ReimbursementRatioDTO dto) throws Exception {

@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import com.cqupt.annotation.RequireRole;
 import com.cqupt.dto.DrugDTO;
 import com.cqupt.service.DrugService;
 import com.cqupt.utils.ResultVo;
@@ -25,6 +26,7 @@ public class DrugController {
     @Autowired
     private DrugService drugService;
 
+    @RequireRole(value = { 1, 2 }, description = "医院操作员和报销管理员可查询")
     @ApiOperation("药品分页查询")
     @GetMapping("/info")
     @ApiImplicitParams({
@@ -34,6 +36,7 @@ public class DrugController {
         return drugService.selectDrugVoPage(drugDTO);
     }
 
+    // 其他操作默认只有管理员可以访问（没有权限注解）
     @ApiOperation("添加药品")
     @PostMapping("/add")
     public ResultVo<Void> addDrug(@RequestBody DrugDTO dto) throws Exception {

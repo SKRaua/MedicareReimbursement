@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import com.cqupt.annotation.RequireRole;
 import com.cqupt.dto.InsurederDTO;
 import com.cqupt.pojo.Insureder;
 import com.cqupt.service.InsurederService;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/insureder")
 @Api(tags = "参保人信息")
 @CrossOrigin
+@RequireRole(value = { 1, 2 }, description = "医院操作员和报销管理员可访问")
 public class InsurederController {
     @Autowired
     private InsurederService insurederService;
@@ -38,7 +40,7 @@ public class InsurederController {
     // 新增参保人（用POJO接收参数）
     @ApiOperation("新增参保人信息")
     @PostMapping("/add")
-    public ResultVo add(@RequestBody Insureder insureder) throws Exception {
+    public ResultVo<Void> add(@RequestBody Insureder insureder) throws Exception {
         // 直接用POJO作为参数传递给Service
         boolean save = insurederService.save(insureder);
         return save ? ResultVo.ok("添加成功") : ResultVo.fail("添加失败");
@@ -48,7 +50,7 @@ public class InsurederController {
     // 修改参保人信息（用POJO接收参数）
     @ApiOperation("修改参保人信息")
     @PostMapping("/update")
-    public ResultVo update(@RequestBody Insureder insureder) throws Exception {
+    public ResultVo<Void> update(@RequestBody Insureder insureder) throws Exception {
         boolean update = insurederService.updateById(insureder);
         return update ? ResultVo.ok("修改成功") : ResultVo.fail("修改失败");
     }

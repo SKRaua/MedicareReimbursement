@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import com.cqupt.annotation.RequireRole;
 import com.cqupt.dto.DiagnosisDTO;
 import com.cqupt.service.DiagnosisService;
 import com.cqupt.utils.ResultVo;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/diagnosis")
 @Api(tags = "诊断信息")
 @CrossOrigin
+@RequireRole(value = { 1 }, description = "医院操作员可访问")
 public class DiagnosisController {
     @Autowired
     private DiagnosisService diagnosisService;
 
+    @RequireRole(value = { 1, 2 }, description = "医院操作员和报销管理员可查询")
     @ApiOperation("诊断分页查询")
     @GetMapping("/info")
     @ApiImplicitParams({

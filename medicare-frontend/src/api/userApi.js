@@ -6,8 +6,7 @@ export function listUserPage(data) {
     return http.get('/user/listPage', { params: data })
 }
 
-
-//用户登录
+//用户登录 - 包含验证码
 export function login(data) {
     return http.get('/user/login', { params: data })
 }
@@ -24,7 +23,7 @@ export function updateUser(data) {
 
 //删除系统用户信息
 export function removeUser(data) {
-   return http.post('/user/remove', data)
+    return http.post('/user/remove', data)
 }
 
 

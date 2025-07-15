@@ -1,10 +1,10 @@
 package com.cqupt.controller;
 
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import com.cqupt.annotation.RequireRole;
 import com.cqupt.dto.ReimbursementCalcDTO;
 import com.cqupt.dto.ReimbursementRecordDTO;
 import com.cqupt.service.ReimbursementRecordService;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/reimbursementRecord")
 @Api(tags = "报销记录")
 @CrossOrigin
+@RequireRole(value = { 2 }, description = "报销管理员可访问")
 public class ReimbursementRecordController {
     @Autowired
     private ReimbursementRecordService rbRecordService;

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import router from '../router'
+import { ElMessage } from 'element-plus'
 
 const instance = axios.create({
     baseURL: "http://localhost:9999/",
@@ -33,15 +34,16 @@ instance.interceptors.request.use(function (config) {
 });
 // Add a response interceptor
 instance.interceptors.response.use(function (response) {
-    // Do something with response data
     console.log(response)
-    // 如果是token出现异常，返回的登录页面
-    if (!response.data.flag && response.data.data == "token_error") {
+    // 如果是token出现异常，返回登录页面
+    if (!response.data.flag && (response.data.data == "token_error" || response.data.message.includes("token") || response.data.message.includes("权限"))) {
+        ElMessage.error(response.data.message || "登录状态已过期，请重新登录")
+        // 清除本地存储
+        sessionStorage.removeItem("token")
+        sessionStorage.removeItem("user")
         router.push("/login")
     }
-    // 这里的相应写了.data，后面就可以把前面的.data去掉
-    return response.data;//
+    return response.data;
 }, function (error) {
-    // Do something with response error
     return Promise.reject(error);
 });

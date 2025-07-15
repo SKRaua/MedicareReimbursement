@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import com.cqupt.annotation.RequireRole;
 import com.cqupt.dto.DiseaseDTO;
 import com.cqupt.pojo.Disease;
 import com.cqupt.service.DiseaseService;
@@ -26,6 +27,7 @@ public class DiseaseController {
     @Autowired
     private DiseaseService diseaseService;
 
+    @RequireRole(value = { 1, 2 }, description = "医院操作员和报销管理员可查询")
     @ApiOperation("疾病分页查询")
     @GetMapping("/info")
     @ApiImplicitParams({
@@ -35,6 +37,7 @@ public class DiseaseController {
         return diseaseService.selectDiseaseVoPage(diseaseDTO);
     }
 
+    // 其他操作默认只有管理员可以访问
     @ApiOperation("新增疾病")
     @PostMapping("/add")
     public ResultVo<Void> addDisease(@RequestBody Disease disease) {

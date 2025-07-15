@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import com.cqupt.annotation.RequireRole;
 import com.cqupt.dto.DrugOrderDTO;
 import com.cqupt.service.DrugOrderService;
 import com.cqupt.utils.ResultVo;
@@ -21,10 +22,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/drugOrder")
 @Api(tags = "药品订单")
 @CrossOrigin
+@RequireRole(value = { 1 }, description = "医院操作员可访问")
 public class DrugOrderController {
     @Autowired
     private DrugOrderService drugOrderService;
 
+    @RequireRole(value = { 1, 2 }, description = "医院操作员和报销管理员可查询")
     @ApiOperation("开药记录分页查询")
     @GetMapping("/info")
     @ApiImplicitParams({
