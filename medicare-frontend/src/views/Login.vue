@@ -121,7 +121,7 @@ export default {
 .login-bg {
   width: 100%;
   height: 100%;
-  background: url(../assets/logbg.jpg) no-repeat center;
+  background: url(../assets/logbg.png) no-repeat center;
   background-size: cover;
   overflow: hidden;
 }
@@ -139,7 +139,7 @@ export default {
 .login .message {
   margin: 10px 0 0 -58px;
   padding: 18px 10px 18px 60px;
-  background: #ec407a;
+  background: #ff81ab;
   position: relative;
   color: #fff;
   font-size: 20px;
@@ -211,7 +211,7 @@ select:focus {
   white-space: nowrap;
   cursor: pointer;
   color: #fff;
-  background-color: #ec407a;
+  background-color: #ff81ab;
   border-radius: 3px;
   border: none;
   appearance: none;
