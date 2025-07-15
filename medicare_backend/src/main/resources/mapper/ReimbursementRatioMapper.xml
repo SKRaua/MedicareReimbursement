@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqupt.mapper.ReimbursementRatioMapper">
+    <resultMap id="BaseResultMap" type="ReimbursementRatio">
+        <id column="id" property="id"/>
+        <result column="hospital_level" property="hospitalLevel"/>
+        <result column="staff_type" property="staffType"/>
+        <result column="start_amount" property="startAmount"/>
+        <result column="end_amount" property="endAmount"/>
+        <result column="ratio" property="ratio"/>
+        <result column="status" property="status"/>
+        <result column="effective_date" property="effectiveDate"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,hospital_level,staff_type,start_amount,end_amount,
+        ratio,status,effective_date
+    </sql>
+
+    <select id="selectReimbursementRatioPage" resultType="ReimbursementRatioVo">
+    SELECT
+        id,
+        hospital_level,
+        staff_type,
+        start_amount,
+        end_amount,
+        ratio,
+        status,
+        effective_date,
+        remark
+    FROM reimbursement_ratio
+        <where>
+            <if test="ratioDTO != null and ratioDTO.hospitalLevel != null and ratioDTO.hospitalLevel != ''">
+            AND hospital_level = #{ratioDTO.hospitalLevel}
+            </if>
+            <if test="ratioDTO != null and ratioDTO.staffType != null and ratioDTO.staffType != ''">
+            AND staff_type = #{ratioDTO.staffType}
+            </if>
+            <if test="ratioDTO != null and ratioDTO.status != null and ratioDTO.status != ''">
+            AND status = #{ratioDTO.status}
+            </if>
+        </where>
+    ORDER BY effective_date DESC
+    </select>
+
+</mapper>

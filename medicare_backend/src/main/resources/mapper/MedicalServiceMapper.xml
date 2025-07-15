@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqupt.mapper.MedicalServiceMapper">
+    <resultMap id="BaseResultMap" type="MedicalService">
+        <id column="id" property="id"/>
+        <result column="item_name" property="itemName"/>
+        <result column="item_code" property="itemCode"/>
+        <result column="national_code" property="nationalCode"/>
+        <result column="description" property="description"/>
+        <result column="exclusion" property="exclusion"/>
+        <result column="unit" property="unit"/>
+        <result column="price" property="price"/>
+        <result column="remark" property="remark"/>
+        <result column="item_type" property="itemType"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,item_name,item_code,national_code,description,exclusion,unit,price,remark,item_type
+    </sql>
+
+
+    <select id="selectMedicalServiceVoPage" resultType="com.cqupt.vo.MedicalServiceVo">
+        SELECT *
+        FROM Medical_Service
+        <where>
+            <if test="medicalServiceDTO != null and medicalServiceDTO.itemName != null and medicalServiceDTO.itemName != ''">
+                AND item_name LIKE CONCAT('%', #{medicalServiceDTO.itemName}, '%')
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

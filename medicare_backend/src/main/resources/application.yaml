@@ -1,0 +1,35 @@
+server:
+  port: 9999
+  servlet:
+    context-path: / # 服务端口和上下文路径配置
+
+# 数据库连接配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/medicare_reimbursement?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 12345678
+
+  # springfox swager 不支持spring2.7+
+  mvc:
+    pathmatch:
+      # matching-strategy: ant_path_matcher # 这种配置似乎有问题
+      matching-strategy: ant-path-matcher # 使用 Ant 风格的路径匹配
+
+  # 日期时间配置
+  jackson:
+    time-zone: GMT+8 # 设置时区为东八区
+    date-format: yyyy-MM-dd HH:mm:ss # 设置日期时间格式
+    serialization:
+      write-dates-as-timestamps: false # 不将日期写成时间戳
+    deserialization:
+      fail-on-unknown-properties: false # 忽略未知属性
+
+# mybatis-plus配置
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true # 开启驼峰命名转换
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 使用标准输出日志
+  mapper-locations: classpath:mapper/*.xml # 指定 MyBatis 的 XML 映射文件位置
+  type-aliases-package: com.cqupt.pojo, com.cqupt.vo, com.cqupt.dto # 指定实体类包路径

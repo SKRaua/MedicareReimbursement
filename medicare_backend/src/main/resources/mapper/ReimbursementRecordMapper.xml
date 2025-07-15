@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqupt.mapper.ReimbursementRecordMapper">
+    <resultMap id="BaseResultMap" type="ReimbursementRecord">
+        <id column="id" property="id"/>
+        <result column="patient_id" property="patientId"/>
+        <result column="hospital_id" property="hospitalId"/>
+        <result column="total_medical_fee" property="totalMedicalFee"/>
+        <result column="deductible_amount" property="deductibleAmount"/>
+        <result column="reimbursable_amount" property="reimbursableAmount"/>
+        <result column="reimbursement_amount" property="reimbursementAmount"/>
+        <result column="self_pay_amount" property="selfPayAmount"/>
+        <result column="reimbursement_ratio" property="reimbursementRatio"/>
+        <result column="reimbursement_date" property="reimbursementDate"/>
+        <result column="operator" property="operator"/>
+        <result column="remark" property="remark"/>
+        <result column="name" property="name"/>
+        <result column="id_card" property="idCard"/>
+        <result column="inpatient_no" property="inpatientNo"/>
+        <result column="work_status" property="workStatus"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,patient_id,hospital_id,total_medical_fee,deductible_amount,
+        reimbursable_amount,reimbursement_amount,self_pay_amount,reimbursement_ratio,
+        reimbursement_date,operator,remark,name,idCard,inpatientNo,workStatus
+    </sql>
+</mapper>

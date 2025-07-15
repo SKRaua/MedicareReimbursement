@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqupt.mapper.InsurederMapper">
+    <!-- 基础结果映射 -->
+    <resultMap id="BaseResultMap" type="com.cqupt.pojo.Insureder">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="id_card" property="idCard"/>
+        <result column="gender" property="gender"/>
+        <result column="birth_date" property="birthDate" />
+        <result column="address" property="address" />
+        <result column="work_status" property="workStatus" />
+        <result column="contact_phone" property="contactPhone" />
+        <result column="inpatient_no" property="inpatientNo" />
+        <result column="admission_time" property="admissionTime" />
+        <result column="discharge_time" property="dischargeTime" />
+        <result column="emergency_contact" property="emergencyContact" />
+        <result column="settlement_type" property="settlementType" />
+    </resultMap>
+
+    <!-- 基础列名列表 -->
+    <sql id="Base_Column_List">
+        id, name, id_card, gender, birth_date, 
+        address, work_status, contact_phone, inpatient_no,admission_time,admission_time
+        , discharge_time, emergency_contact, settlement_type
+    </sql>
+
+
+    <!-- 分页查询患者VO（关联查询） -->
+    <select id="selectPatientPage" resultType="InsurederVo">
+        SELECT
+            c.id,
+            c.name,
+            c.id_card,
+            c.gender,
+            c.birth_date,
+            TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS age,  -- 计算年龄
+            c.address,
+            c.work_status,
+            c.contact_phone,
+            c.inpatient_no,
+            c.admission_time,
+            c.discharge_time,
+            c.emergency_contact,
+            c.settlement_type 
+        FROM
+            Insureder c
+        <where>
+            <!-- 动态查询条件（根据实际业务调整） -->
+            <if test="insurederDTO != null and insurederDTO.name != null">
+                <!-- and insurederDTO.name != '' -->
+                AND c.name LIKE CONCAT('%', #{insurederDTO.name}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

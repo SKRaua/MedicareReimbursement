@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqupt.mapper.DrugOrderMapper">
+    <!-- 基础结果集映射 -->
+    <resultMap id="BaseResultMap" type="DrugOrder">
+        <id column="id" property="id"/>
+        <result column="patient_id" property="patientId"/>
+        <result column="drug_id" property="drugId"/>
+        <result column="order_time" property="orderTime"/>
+        <result column="quantity" property="quantity"/>
+        <result column="doctor_name" property="doctorName"/>
+    </resultMap>
+
+    <!-- 基础字段列表 -->
+    <sql id="Base_Column_List">
+        id, patient_id, drug_id, order_time, quantity, doctor_name
+    </sql>
+
+
+    <!-- 按投保人/病人的id分页查询DrugOrderVo -->
+    <select id="selectDrugOrderVoPage" resultType="com.cqupt.vo.DrugOrderVo">
+    SELECT
+        o.id,
+        o.patient_id,
+        o.drug_id,
+        o.order_time,
+        o.quantity,
+        o.doctor_name,
+        d.drug_name,
+        d.specification,
+        d.unit,
+        d.manufacturer,
+        d.price,
+        d.drug_type
+    FROM Drug_Order o
+    LEFT JOIN Drug d ON o.drug_id = d.id
+        <where>
+            <if test="drugOrderDTO != null and drugOrderDTO.patientId != null and drugOrderDTO.patientId != ''">
+            AND o.patient_id = #{drugOrderDTO.patientId}
+            </if>
+            <if test="drugOrderDTO != null and drugOrderDTO.drugType != null and drugOrderDTO.drugType != ''">
+            AND d.drug_type = #{drugOrderDTO.drugType}
+            </if>
+        </where>
+    ORDER BY o.order_time DESC
+    </select>
+</mapper>

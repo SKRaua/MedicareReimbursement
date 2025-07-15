@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqupt.mapper.DrugRbRatioMapper">
+    <resultMap id="BaseResultMap" type="DrugRbRatio">
+        <id column="id" property="id"/>
+        <result column="drug_type" property="drugType"/>
+        <result column="drug_ratio" property="drugRatio"/>
+        <result column="status" property="status"/>
+        <result column="effective_date" property="effectiveDate"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,drug_type,drug_ratio,status,effective_date
+    </sql>
+
+    <!-- selectDrugRbRatioVoPage -->
+
+    <select id="selectDrugRbRatioVoPage" resultType="DrugRbRatioVo">
+        SELECT
+            id,
+            drug_type,
+            drug_ratio,
+            status,
+            effective_date
+        FROM
+            drug_rb_ratio
+        <where>
+            <if test="dto.drugType != null and dto.drugType != ''">
+                AND drug_type = #{dto.drugType}
+            </if>
+            <if test="dto.status != null and dto.status != ''">
+                AND status = #{dto.status}
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cqupt.mapper.DiagnosisMapper">
+    <resultMap id="BaseResultMap" type="Diagnosis">
+        <id column="id" property="id"/>
+        <result column="patient_id" property="patientId"/>
+        <result column="disease_id" property="diseaseId"/>
+        <result column="diagnosis_type" property="diagnosisType"/>
+        <result column="diagnosis_date" property="diagnosisDate"/>
+        <result column="diagnose_doctor" property="diagnoseDoctor"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,patient_id,disease_id,diagnosis_type,diagnosis_date,diagnose_doctor,remark
+    </sql>
+
+    <!-- 分页查询DiagnosisVo，联表查疾病名称 -->
+    <select id="selectDiagnosisVoPage" resultType="com.cqupt.vo.DiagnosisVo">
+        SELECT 
+        d.*,
+        ds.disease_name
+        FROM Diagnosis d
+        LEFT JOIN Disease ds ON d.disease_id = ds.id
+        <where>
+            <if test="diagnosisDTO != null and diagnosisDTO.patientId != null">
+                AND d.patient_id = #{diagnosisDTO.patientId}
+            </if>
+            <if test="diagnosisDTO != null and diagnosisDTO.diseaseName != null and diagnosisDTO.diseaseName != ''">
+                AND ds.disease_name LIKE CONCAT('%', #{diagnosisDTO.diseaseName}, '%')
+            </if>
+        </where>
+        ORDER BY d.diagnosis_date DESC
+    </select>
+
+
+</mapper>

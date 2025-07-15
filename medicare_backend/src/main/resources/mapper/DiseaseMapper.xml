@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqupt.mapper.DiseaseMapper">
+    <resultMap id="BaseResultMap" type="Disease">
+        <id column="id" property="id"/>
+        <result column="disease_name" property="diseaseName"/>
+        <result column="disease_code" property="diseaseCode"/>
+        <result column="icd_code" property="icdCode"/>
+        <result column="disease_type" property="diseaseType"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,disease_name,disease_code,icd_code,disease_type
+    </sql>
+
+
+
+    <!-- 分页查询DiseaseVo -->
+    <select id="selectDiseaseVoPage" resultType="com.cqupt.vo.DiseaseVo">
+        SELECT *
+        FROM Disease
+        <where>
+            <if test="diseaseDTO != null and diseaseDTO.diseaseName != null and diseaseDTO.diseaseName != ''">
+                AND disease_name LIKE CONCAT('%', #{diseaseDTO.diseaseName}, '%')
+            </if>
+            <if test="diseaseDTO != null and diseaseDTO.diseaseType != null and diseaseDTO.diseaseType != ''">
+                AND disease_type = #{diseaseDTO.diseaseType}
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

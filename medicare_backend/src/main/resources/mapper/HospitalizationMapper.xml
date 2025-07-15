@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqupt.mapper.HospitalizationMapper">
+
+    <!-- 基础结果集映射：数据库字段与实体类属性映射 -->
+    <resultMap id="BaseResultMap" type="Hospitalization">
+        <id column="id" property="id"/>
+        <result column="insureder_id" property="insurederId"/>
+        <result column="inpatient_no" property="inpatientNo"/>
+        <result column="admission_time" property="admissionTime"/>
+        <result column="discharge_time" property="dischargeTime"/>
+        <result column="emergency_contact" property="emergencyContact"/>
+        <result column="settlement_type" property="settlementType"/>
+
+    </resultMap>
+
+    <!-- 基础字段列表：可复用的查询字段集合 -->
+    <sql id="Base_Column_List">
+        id, 
+        insureder_id, 
+        inpatient_no, 
+        admission_time, 
+        discharge_time, 
+        emergency_contact
+    </sql>
+
+</mapper>

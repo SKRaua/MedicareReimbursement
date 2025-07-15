@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqupt.mapper.DrugMapper">
+    <resultMap id="BaseResultMap" type="Drug">
+        <id column="id" property="id"/>
+        <result column="drug_name" property="drugName"/>
+        <result column="trade_name" property="tradeName"/>
+        <result column="specification" property="specification"/>
+        <result column="unit" property="unit"/>
+        <result column="manufacturer" property="manufacturer"/>
+        <result column="price" property="price"/>
+        <result column="drug_type" property="drugType"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,drug_name,trade_name,specification,unit,manufacturer,price,drug_type,remark
+    </sql>
+
+
+
+    <!-- selectDrugVoPage  
+        <include refid="Base_Column_List"/>-->
+
+    <select id="selectDrugVoPage" resultType="com.cqupt.vo.DrugVo">
+        SELECT *
+        FROM Drug
+        <where>
+            <if test="drugDTO != null and drugDTO.drugName != null and drugDTO.drugName != ''">
+                AND drug_name LIKE CONCAT('%', #{drugDTO.drugName}, '%')
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>
