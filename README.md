@@ -1,6 +1,6 @@
 # 💊 医疗报销管理系统 💊
 
-本项目为医疗报销管理系统，包含前端（[medicare-rb-front](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)）和后端（[medicare-rb-back](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)）两个子项目，支持药品信息维护、药品订单、医保报销比例、患者诊断等功能，适用于医院或医保相关场景。
+本项目为医疗报销管理系统，包含前端（[medicare-frontend](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)）和后端（[medicare_backend](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)）两个子项目，支持药品信息维护、药品订单、医保报销比例、患者诊断等功能，适用于医院或医保相关场景。
 
 ## 目录结构
 
@@ -66,6 +66,7 @@ MedicareReimbursement/
    ```
    cd medicare-frontend
    ```
+
 2. 配置数据库连接（`application.yml` 或 `application.properties`），确保与本地 MySQL 配置一致
 3. 使用 IDE（如 IDEA）或命令行启动 Spring Boot 项目
 
@@ -76,6 +77,7 @@ MedicareReimbursement/
    mvn clean package
    java -jar target/medicare-rb-back-*.jar
    ```
+
 4. 后端默认端口为 8888，接口文档可访问 `http://localhost:9999/swagger-ui.html`
 
 ### 3. 前端启动（medicare-rb-front）
@@ -85,6 +87,7 @@ MedicareReimbursement/
    ```
    cd medicare-frontend
    ```
+
 2. 安装依赖
 
    ```
@@ -97,11 +100,13 @@ MedicareReimbursement/
    ```
    npm install echarts@^5.0.0 vue-echarts@6.7.2 element-plus @element-plus/icons-vue axios vuex@^4.0.0 vue-router@^4.0.0
    ```
+
 3. 启动开发服务器
 
    ```
    npm run serve
    ```
+
 4. 默认访问地址：`http://localhost:8080`（如有端口冲突可在 `vue.config.js` 修改）
 5. 前端通过 axios 访问后端接口，已配置跨域
 
@@ -136,11 +141,13 @@ MedicareReimbursement/
    ![1752233415860](image/README/1752233415860.png)
 
    ![1752233428339](image/README/1752233428339.png)
+
 2. 医院模块
 
    ![1752233484144](image/README/1752233484144.png)
 
    ![1752233494091](image/README/1752233494091.png)
+
 3. 报销管理
 
    ![1752233539545](image/README/1752233539545.png)
