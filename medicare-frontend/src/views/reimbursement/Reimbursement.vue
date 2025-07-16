@@ -161,7 +161,7 @@
 
 <script setup>
 import { ref, reactive, onMounted, computed } from "vue";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { selectInsurederPage } from "@/api/insurederApi.js";
 import { getDrugOrderPage } from "@/api/drugOrderApi.js";
 import { getMedicalServiceOrderPage } from "@/api/medicalServiceOrderApi.js";
@@ -450,14 +450,101 @@ const handleConfirmRb = async () => {
     try {
         const res = await confirmRb({ patientId: selectedInsureder.value.id });
         if (res.flag) {
-            ElMessage.success("报销成功");
+            const message = res.message || "报销成功";
+
+            // 检查是否包含PDF文件名
+            if (message.includes("PDF文件已生成")) {
+                const fileName = extractPdfFileName(message);
+
+                // 显示成功消息并询问是否下载
+                ElMessageBox.confirm(
+                    `${message}\n\n是否立即下载PDF报销单？`,
+                    '报销成功',
+                    {
+                        confirmButtonText: '立即下载',
+                        cancelButtonText: '稍后下载',
+                        type: 'success',
+                    }
+                ).then(() => {
+                    if (fileName) {
+                        downloadPdf(fileName);
+                    } else {
+                        ElMessage.error('PDF文件名解析失败，请稍后重试');
+                    }
+                }).catch(() => {
+                    ElMessage.info('您可以稍后通过报销记录页面下载PDF文件');
+                });
+            } else {
+                ElMessage.success(message);
+            }
+
             reimburseDialogVisible.value = false;
             loadCustomerList(); // 刷新列表
         } else {
             ElMessage.error(res.message || "报销失败");
         }
     } catch (err) {
+        console.error('报销确认错误:', err);
         ElMessage.error("网络错误，请重试");
+    }
+};
+
+// 从响应消息中提取PDF文件名
+const extractPdfFileName = (message) => {
+    // 匹配格式：报销成功，PDF文件已生成：filename.pdf
+    const match = message.match(/PDF文件已生成：([^,\s]+\.pdf)/);
+    if (match && match[1]) {
+        return match[1];
+    }
+
+    // 备用匹配格式，匹配任何PDF文件名
+    const altMatch = message.match(/([^/\s,]+\.pdf)/);
+    if (altMatch && altMatch[1]) {
+        return altMatch[1];
+    }
+
+    return null;
+};
+
+// 下载PDF文件
+const downloadPdf = (fileName) => {
+    try {
+        console.log('开始下载PDF文件:', fileName);
+
+        // 创建下载URL
+        const downloadUrl = `http://localhost:9999/pdf/download/${encodeURIComponent(fileName)}`;
+        console.log('下载URL:', downloadUrl);
+
+        // 创建隐藏的下载链接
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = fileName;
+        link.style.display = 'none';
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        ElMessage.success('PDF文件开始下载');
+
+    } catch (error) {
+        console.error('下载失败:', error);
+
+        // 备用方案：直接打开新窗口
+        const downloadUrl = `http://localhost:9999/pdf/download/${encodeURIComponent(fileName)}`;
+        try {
+            window.open(downloadUrl, '_blank');
+            ElMessage.info('已在新窗口打开下载链接');
+        } catch (openError) {
+            // 最终备用方案：提供手动下载链接
+            ElMessage({
+                message: `下载失败，请点击此链接手动下载：<a href="${downloadUrl}" target="_blank" style="color: #409EFF; text-decoration: underline;">${fileName}</a>`,
+                dangerouslyUseHTMLString: true,
+                type: 'error',
+                duration: 15000,
+                showClose: true
+            });
+        }
     }
 };
 
@@ -624,5 +711,13 @@ const handleConfirmRb = async () => {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+/* PDF下载消息样式 */
+:deep(.pdf-download-message) {
+    .el-message__content {
+        color: #67C23A !important;
+        font-weight: bold;
+    }
 }
 </style>

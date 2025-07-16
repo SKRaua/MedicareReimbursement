@@ -1,0 +1,4207 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "文档说明：《医疗保险报销系统》后端接口说明",
+    "version": "v2.1.1",
+    "title": "《医疗保险报销系统》后端接口说明",
+    "contact": {
+      "name": "skraua",
+      "url": "https://github.com/skraua",
+      "email": "ltghbwy@gamil.com"
+    }
+  },
+  "host": "127.0.0.1:9999",
+  "basePath": "/",
+  "tags": [
+    { "name": "PDF文件下载管理", "description": "Pdf Download Controller" },
+    { "name": "captcha-controller", "description": "Captcha Controller" },
+    { "name": "医疗服务", "description": "Medical Service Controller" },
+    { "name": "参保人信息", "description": "Insureder Controller" },
+    { "name": "报销比例", "description": "Reimbursement Ratio Controller" },
+    { "name": "报销记录", "description": "Reimbursement Record Controller" },
+    { "name": "用户管理", "description": "User Controller" },
+    { "name": "疾病信息", "description": "Disease Controller" },
+    { "name": "药品信息", "description": "Drug Controller" },
+    { "name": "药品报销比例", "description": "Drug Rb Ratio Controller" },
+    { "name": "药品订单", "description": "Drug Order Controller" },
+    { "name": "诊断信息", "description": "Diagnosis Controller" },
+    { "name": "诊疗项目", "description": "Treatment Item Controller" }
+  ],
+  "paths": {
+    "/captcha": {
+      "get": {
+        "tags": ["captcha-controller"],
+        "summary": "getCaptcha",
+        "operationId": "getCaptchaUsingGET",
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Map«string,string»»",
+              "originalRef": "ResultVo«Map«string,string»»"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/diagnosis/add": {
+      "post": {
+        "tags": ["诊断信息"],
+        "summary": "添加诊断",
+        "operationId": "addDiagnosisUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "diagnosisDTO",
+            "description": "diagnosisDTO",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DiagnosisDTO",
+              "originalRef": "DiagnosisDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/diagnosis/edit": {
+      "post": {
+        "tags": ["诊断信息"],
+        "summary": "修改诊断",
+        "operationId": "updateDiagnosisUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "diagnosisDTO",
+            "description": "diagnosisDTO",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DiagnosisDTO",
+              "originalRef": "DiagnosisDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/diagnosis/info": {
+      "get": {
+        "tags": ["诊断信息"],
+        "summary": "诊断分页查询",
+        "operationId": "selectDiagnosisVoPageUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "diagnoseDoctor",
+            "in": "query",
+            "description": "诊断医生",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "diagnosisDate",
+            "in": "query",
+            "description": "诊断日期",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "diagnosisType",
+            "in": "query",
+            "description": "诊断类型",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "diseaseId",
+            "in": "query",
+            "description": "疾病ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "diseaseName",
+            "in": "query",
+            "description": "疾病名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "主键ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "patientId",
+            "in": "query",
+            "description": "患者ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "remark",
+            "in": "query",
+            "description": "诊断说明",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Page«DiagnosisVo»»",
+              "originalRef": "ResultVo«Page«DiagnosisVo»»"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/diagnosis/remove": {
+      "post": {
+        "tags": ["诊断信息"],
+        "summary": "删除诊断",
+        "operationId": "removeDiagnosisUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "diagnosisDTO",
+            "description": "diagnosisDTO",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DiagnosisDTO",
+              "originalRef": "DiagnosisDTO"
+            }
+          },
+          {
+            "name": "id",
+            "description": "诊断ID",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/disease/add": {
+      "post": {
+        "tags": ["疾病信息"],
+        "summary": "新增疾病",
+        "operationId": "addDiseaseUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "disease",
+            "description": "disease",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Disease",
+              "originalRef": "Disease"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/disease/delete": {
+      "post": {
+        "tags": ["疾病信息"],
+        "summary": "删除疾病",
+        "operationId": "deleteDiseaseUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "disease",
+            "description": "disease",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Disease",
+              "originalRef": "Disease"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/disease/info": {
+      "get": {
+        "tags": ["疾病信息"],
+        "summary": "疾病分页查询",
+        "operationId": "selectDiseaseVoPageUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "diseaseCode",
+            "in": "query",
+            "description": "疾病编码",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "diseaseName",
+            "in": "query",
+            "description": "疾病名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "diseaseType",
+            "in": "query",
+            "description": "疾病类型",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "icdCode",
+            "in": "query",
+            "description": "ICD编码",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "主键ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每一页显示的条数",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "remark",
+            "in": "query",
+            "description": "备注",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Page«DiseaseVo»»",
+              "originalRef": "ResultVo«Page«DiseaseVo»»"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/disease/update": {
+      "post": {
+        "tags": ["疾病信息"],
+        "summary": "修改疾病",
+        "operationId": "updateDiseaseUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "disease",
+            "description": "disease",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Disease",
+              "originalRef": "Disease"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/drug/add": {
+      "post": {
+        "tags": ["药品信息"],
+        "summary": "添加药品",
+        "operationId": "addDrugUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DrugDTO",
+              "originalRef": "DrugDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/drug/edit": {
+      "post": {
+        "tags": ["药品信息"],
+        "summary": "修改药品",
+        "operationId": "updateDrugUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DrugDTO",
+              "originalRef": "DrugDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/drug/info": {
+      "get": {
+        "tags": ["药品信息"],
+        "summary": "药品分页查询",
+        "operationId": "selectDrugVoPageUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "drugName",
+            "in": "query",
+            "description": "通用名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "drugType",
+            "in": "query",
+            "description": "医保类型",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "主键ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "manufacturer",
+            "in": "query",
+            "description": "生产企业",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "price",
+            "in": "query",
+            "description": "单价",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "remark",
+            "in": "query",
+            "description": "适应症/禁忌症等",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "specification",
+            "in": "query",
+            "description": "规格",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tradeName",
+            "in": "query",
+            "description": "商品名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "unit",
+            "in": "query",
+            "description": "计价单位",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Page«DrugVo»»",
+              "originalRef": "ResultVo«Page«DrugVo»»"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/drug/remove": {
+      "post": {
+        "tags": ["药品信息"],
+        "summary": "删除药品",
+        "operationId": "removeDrugUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DrugDTO",
+              "originalRef": "DrugDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/drugOrder/add": {
+      "post": {
+        "tags": ["药品订单"],
+        "summary": "添加开药记录",
+        "operationId": "addDrugOrderUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "drugOrderDTO",
+            "description": "drugOrderDTO",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DrugOrderDTO",
+              "originalRef": "DrugOrderDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/drugOrder/edit": {
+      "post": {
+        "tags": ["药品订单"],
+        "summary": "修改开药记录",
+        "operationId": "updateDrugOrderUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "drugOrderDTO",
+            "description": "drugOrderDTO",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DrugOrderDTO",
+              "originalRef": "DrugOrderDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/drugOrder/info": {
+      "get": {
+        "tags": ["药品订单"],
+        "summary": "开药记录分页查询",
+        "operationId": "selectDrugOrderVoPageUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "doctorName",
+            "in": "query",
+            "description": "开单医生",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "drugId",
+            "in": "query",
+            "description": "药品ID（关联药品表）",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "drugType",
+            "in": "query",
+            "description": "医保类型",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "主键ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "orderTime",
+            "in": "query",
+            "description": "开单时间",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "patientId",
+            "in": "query",
+            "description": "患者ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "quantity",
+            "in": "query",
+            "description": "药品数量",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Page«DrugOrderVo»»",
+              "originalRef": "ResultVo«Page«DrugOrderVo»»"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/drugOrder/remove": {
+      "post": {
+        "tags": ["药品订单"],
+        "summary": "删除开药记录",
+        "operationId": "removeDrugOrderUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "drugOrderDTO",
+            "description": "drugOrderDTO",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DrugOrderDTO",
+              "originalRef": "DrugOrderDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/drugReimbursementRatio/add": {
+      "post": {
+        "tags": ["药品报销比例"],
+        "summary": "添加药品报销比例",
+        "operationId": "addDrugRbRatioUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DrugRbRatioDTO",
+              "originalRef": "DrugRbRatioDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/drugReimbursementRatio/edit": {
+      "post": {
+        "tags": ["药品报销比例"],
+        "summary": "修改药品报销比例",
+        "operationId": "updateDrugRbRatioUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DrugRbRatioDTO",
+              "originalRef": "DrugRbRatioDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/drugReimbursementRatio/enabledList": {
+      "get": {
+        "tags": ["药品报销比例"],
+        "summary": "获取正在生效的三种药品类型的报销比例",
+        "operationId": "getEnabledDrugRbRatiosUsingGET",
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«List«DrugRbRatioVo»»",
+              "originalRef": "ResultVo«List«DrugRbRatioVo»»"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/drugReimbursementRatio/info": {
+      "get": {
+        "tags": ["药品报销比例"],
+        "summary": "分页查询",
+        "operationId": "selectDrugRbRatioVoPageUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "drugRatio",
+            "in": "query",
+            "description": "报销比例（0-1之间的小数）",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "drugType",
+            "in": "query",
+            "description": "药品类型（甲类/乙类/丙类）",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "effectiveDate",
+            "in": "query",
+            "description": "生效日期",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "主键ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "状态（启用/停用）",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Page«DrugRbRatioVo»»",
+              "originalRef": "ResultVo«Page«DrugRbRatioVo»»"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/drugReimbursementRatio/remove": {
+      "post": {
+        "tags": ["药品报销比例"],
+        "summary": "删除药品报销比例",
+        "operationId": "removeDrugRbRatioUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DrugRbRatioDTO",
+              "originalRef": "DrugRbRatioDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/insureder/add": {
+      "post": {
+        "tags": ["参保人信息"],
+        "summary": "新增参保人信息",
+        "operationId": "addUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "insureder",
+            "description": "insureder",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Insureder",
+              "originalRef": "Insureder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/insureder/info": {
+      "get": {
+        "tags": ["参保人信息"],
+        "summary": "参保人信息查询",
+        "operationId": "selectInsurederPageUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "家庭地址",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "admissionTime",
+            "in": "query",
+            "description": "入院时间",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "age",
+            "in": "query",
+            "description": "年龄",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "birthDate",
+            "in": "query",
+            "description": "出生日期",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "contactPhone",
+            "in": "query",
+            "description": "联系电话",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "dischargeTime",
+            "in": "query",
+            "description": "出院时间",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "emergencyContact",
+            "in": "query",
+            "description": "紧急联系人",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "gender",
+            "in": "query",
+            "description": "性别 0-女 1-男 2-未知",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "主键ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "idCard",
+            "in": "query",
+            "description": "身份证号",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "inpatientNo",
+            "in": "query",
+            "description": "住院号",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "姓名",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "settlementType",
+            "in": "query",
+            "description": "结算类型",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "workStatus",
+            "in": "query",
+            "description": "工作状态",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Page«InsurederVo»»",
+              "originalRef": "ResultVo«Page«InsurederVo»»"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/insureder/remove": {
+      "post": {
+        "tags": ["参保人信息"],
+        "summary": "删除参保人信息",
+        "operationId": "removeUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "description": "ID（必填）",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          },
+          {
+            "in": "body",
+            "name": "insurederDTO",
+            "description": "insurederDTO",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Insureder",
+              "originalRef": "Insureder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/insureder/update": {
+      "post": {
+        "tags": ["参保人信息"],
+        "summary": "修改参保人信息",
+        "operationId": "updateUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "insureder",
+            "description": "insureder",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Insureder",
+              "originalRef": "Insureder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/medicalService/add": {
+      "post": {
+        "tags": ["医疗服务"],
+        "summary": "添加医疗服务",
+        "operationId": "addMedicalServiceUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MedicalServiceDTO",
+              "originalRef": "MedicalServiceDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/medicalService/edit": {
+      "post": {
+        "tags": ["医疗服务"],
+        "summary": "修改医疗服务",
+        "operationId": "updateMedicalServiceUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MedicalServiceDTO",
+              "originalRef": "MedicalServiceDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/medicalService/info": {
+      "get": {
+        "tags": ["医疗服务"],
+        "summary": "分页查询",
+        "operationId": "selectMedicalServiceVoPageUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "description",
+            "in": "query",
+            "description": "项目详情说明",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "exclusion",
+            "in": "query",
+            "description": "除外内容",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "主键ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "itemCode",
+            "in": "query",
+            "description": "项目编码",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "itemName",
+            "in": "query",
+            "description": "项目名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "itemType",
+            "in": "query",
+            "description": "财务分类",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "nationalCode",
+            "in": "query",
+            "description": "国家统一编码",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "price",
+            "in": "query",
+            "description": "单价",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "remark",
+            "in": "query",
+            "description": "备注",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "unit",
+            "in": "query",
+            "description": "计价单位（次/小时等）",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Page«MedicalServiceVo»»",
+              "originalRef": "ResultVo«Page«MedicalServiceVo»»"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/medicalService/remove": {
+      "post": {
+        "tags": ["医疗服务"],
+        "summary": "删除医疗服务",
+        "operationId": "removeMedicalServiceUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MedicalServiceDTO",
+              "originalRef": "MedicalServiceDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/medicalServiceOrder/add": {
+      "post": {
+        "tags": ["医疗服务"],
+        "summary": "添加医疗服务记录",
+        "operationId": "addMedicalServiceOrderUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MedicalServiceOrderDTO",
+              "originalRef": "MedicalServiceOrderDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/medicalServiceOrder/edit": {
+      "post": {
+        "tags": ["医疗服务"],
+        "summary": "修改医疗服务记录",
+        "operationId": "updateMedicalServiceOrderUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MedicalServiceOrderDTO",
+              "originalRef": "MedicalServiceOrderDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/medicalServiceOrder/info": {
+      "get": {
+        "tags": ["医疗服务"],
+        "summary": "信息查询",
+        "operationId": "selectDrugOrderVoPageUsingGET_1",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "doctorName",
+            "in": "query",
+            "description": "开单医生姓名",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "executeStatus",
+            "in": "query",
+            "description": "执行状态（'未执行','执行中','已执行','取消'）",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "executeTime",
+            "in": "query",
+            "description": "执行时间",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "主键ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "itemId",
+            "in": "query",
+            "description": "项目ID（关联药品、服务或诊疗项目）",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "nurseName",
+            "in": "query",
+            "description": "执行护士姓名",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "orderTime",
+            "in": "query",
+            "description": "开单时间",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "patientId",
+            "in": "query",
+            "description": "患者ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "quantity",
+            "in": "query",
+            "description": "数量",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Page«MedicalServiceOrderVo»»",
+              "originalRef": "ResultVo«Page«MedicalServiceOrderVo»»"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/medicalServiceOrder/remove": {
+      "post": {
+        "tags": ["医疗服务"],
+        "summary": "删除医疗服务记录",
+        "operationId": "removeMedicalServiceOrderUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MedicalServiceOrderDTO",
+              "originalRef": "MedicalServiceOrderDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/pdf/check/{fileName}": {
+      "get": {
+        "tags": ["PDF文件下载管理"],
+        "summary": "检查PDF文件是否存在",
+        "operationId": "checkPdfExistsUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "fileName",
+            "in": "path",
+            "description": "fileName",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«string»",
+              "originalRef": "ResultVo«string»"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/pdf/clean-expired": {
+      "post": {
+        "tags": ["PDF文件下载管理"],
+        "summary": "清理过期PDF文件",
+        "operationId": "cleanExpiredFilesUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«string»",
+              "originalRef": "ResultVo«string»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/pdf/download/{fileName}": {
+      "get": {
+        "tags": ["PDF文件下载管理"],
+        "summary": "下载PDF文件",
+        "operationId": "downloadPdfUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "fileName",
+            "in": "path",
+            "description": "fileName",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource",
+              "originalRef": "Resource"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/reimbursementRatio/add": {
+      "post": {
+        "tags": ["报销比例"],
+        "summary": "添加报销比例",
+        "operationId": "addReimbursementRatioUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReimbursementRatioDTO",
+              "originalRef": "ReimbursementRatioDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/reimbursementRatio/edit": {
+      "post": {
+        "tags": ["报销比例"],
+        "summary": "修改报销比例",
+        "operationId": "updateReimbursementRatioUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReimbursementRatioDTO",
+              "originalRef": "ReimbursementRatioDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/reimbursementRatio/info": {
+      "get": {
+        "tags": ["报销比例"],
+        "summary": "信息查询",
+        "operationId": "selectReimbursementRatioPageUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "effectiveDate",
+            "in": "query",
+            "description": "生效日期",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "endAmount",
+            "in": "query",
+            "description": "封顶金额",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "hospitalLevel",
+            "in": "query",
+            "description": "医院等级（一级/二级/三级）",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "主键ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "ratio",
+            "in": "query",
+            "description": "报销比例",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "remark",
+            "in": "query",
+            "description": "备注",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "staffType",
+            "in": "query",
+            "description": "人员类型（在职/退休/特殊人群）",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "startAmount",
+            "in": "query",
+            "description": "起付金额",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "状态（启用/停用）",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Page«ReimbursementRatioVo»»",
+              "originalRef": "ResultVo«Page«ReimbursementRatioVo»»"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/reimbursementRatio/remove": {
+      "post": {
+        "tags": ["报销比例"],
+        "summary": "删除报销比例",
+        "operationId": "removeReimbursementRatioUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReimbursementRatioDTO",
+              "originalRef": "ReimbursementRatioDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/reimbursementRecord/calculateRb": {
+      "get": {
+        "tags": ["报销记录"],
+        "summary": "计算报销信息",
+        "operationId": "selectDrugOrderVoPageUsingGET_2",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "deductibleAmount",
+            "in": "query",
+            "description": "起付金额",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "hospitalId",
+            "in": "query",
+            "description": "医院ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "主键ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "idCard",
+            "in": "query",
+            "description": "身份证号",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "inpatientNo",
+            "in": "query",
+            "description": "住院号",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "姓名",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "operator",
+            "in": "query",
+            "description": "操作员",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "patientId",
+            "in": "query",
+            "description": "患者ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "reimbursableAmount",
+            "in": "query",
+            "description": "可报销金额",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "reimbursementAmount",
+            "in": "query",
+            "description": "实际报销金额",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "reimbursementDate",
+            "in": "query",
+            "description": "报销日期",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "reimbursementRatio",
+            "in": "query",
+            "description": "报销比例",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "remark",
+            "in": "query",
+            "description": "备注",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "selfPayAmount",
+            "in": "query",
+            "description": "自付金额",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "totalMedicalFee",
+            "in": "query",
+            "description": "总医疗费用",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "workStatus",
+            "in": "query",
+            "description": "工作状态 '在职','退休','无业','学生'",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«ReimbursementRatioDTO»",
+              "originalRef": "ResultVo«ReimbursementRatioDTO»"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/reimbursementRecord/confirmRb": {
+      "post": {
+        "tags": ["报销记录"],
+        "summary": "添加报销记录",
+        "operationId": "confirmReimbursementUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "patientId",
+            "description": "患者id",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          },
+          {
+            "in": "body",
+            "name": "recordDTO",
+            "description": "recordDTO",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReimbursementRecordDTO",
+              "originalRef": "ReimbursementRecordDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/treatmentItem/add": {
+      "post": {
+        "tags": ["诊疗项目"],
+        "summary": "添加诊疗项目",
+        "operationId": "addTreatmentItemUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TreatmentItemDTO",
+              "originalRef": "TreatmentItemDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/treatmentItem/edit": {
+      "post": {
+        "tags": ["诊疗项目"],
+        "summary": "修改诊疗项目",
+        "operationId": "updateTreatmentItemUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TreatmentItemDTO",
+              "originalRef": "TreatmentItemDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/treatmentItem/info": {
+      "get": {
+        "tags": ["诊疗项目"],
+        "summary": "分页查询",
+        "operationId": "selectTreatmentItemVoPageUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "description",
+            "in": "query",
+            "description": "项目详情说明",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "exclusion",
+            "in": "query",
+            "description": "除外内容",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "主键ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "itemCode",
+            "in": "query",
+            "description": "项目编码",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "itemName",
+            "in": "query",
+            "description": "项目名称",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "itemType",
+            "in": "query",
+            "description": "财务分类",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "nationalCode",
+            "in": "query",
+            "description": "国家统一编码",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "price",
+            "in": "query",
+            "description": "单价",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "remark",
+            "in": "query",
+            "description": "备注",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "unit",
+            "in": "query",
+            "description": "计价单位（次/小时等）",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Page«TreatmentItemVo»»",
+              "originalRef": "ResultVo«Page«TreatmentItemVo»»"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/treatmentItem/remove": {
+      "post": {
+        "tags": ["诊疗项目"],
+        "summary": "删除诊疗项目",
+        "operationId": "removeTreatmentItemUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TreatmentItemDTO",
+              "originalRef": "TreatmentItemDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/treatmentItemOrder/add": {
+      "post": {
+        "tags": ["诊疗项目"],
+        "summary": "添加诊疗项目订单",
+        "operationId": "addTreatmentItemOrderUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TreatmentItemOrderDTO",
+              "originalRef": "TreatmentItemOrderDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/treatmentItemOrder/edit": {
+      "post": {
+        "tags": ["诊疗项目"],
+        "summary": "修改诊疗项目订单",
+        "operationId": "updateTreatmentItemOrderUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TreatmentItemOrderDTO",
+              "originalRef": "TreatmentItemOrderDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/treatmentItemOrder/info": {
+      "get": {
+        "tags": ["诊疗项目"],
+        "summary": "信息查询",
+        "operationId": "selectDrugOrderVoPageUsingGET_3",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "doctorName",
+            "in": "query",
+            "description": "开单医生姓名",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "executeStatus",
+            "in": "query",
+            "description": "执行状态（'未执行','执行中','已执行','取消'）",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "executeTime",
+            "in": "query",
+            "description": "执行时间",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "主键ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "itemId",
+            "in": "query",
+            "description": "项目ID（关联药品、服务或诊疗项目）",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "nurseName",
+            "in": "query",
+            "description": "执行护士姓名",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "orderTime",
+            "in": "query",
+            "description": "开单时间",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "patientId",
+            "in": "query",
+            "description": "患者ID",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "quantity",
+            "in": "query",
+            "description": "数量",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Page«TreatmentOrderVo»»",
+              "originalRef": "ResultVo«Page«TreatmentOrderVo»»"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/treatmentItemOrder/remove": {
+      "post": {
+        "tags": ["诊疗项目"],
+        "summary": "删除诊疗项目订单",
+        "operationId": "removeTreatmentItemOrderUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TreatmentItemOrderDTO",
+              "originalRef": "TreatmentItemOrderDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/user/add": {
+      "post": {
+        "tags": ["用户管理"],
+        "summary": "添加用户",
+        "operationId": "addUsingPOST_1",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User对象",
+              "originalRef": "User对象"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/user/listPage": {
+      "get": {
+        "tags": ["用户管理"],
+        "summary": "查询医疗操作人员列表（分页）",
+        "operationId": "listPageUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "currentPage",
+            "in": "query",
+            "description": "当前页码",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "主键",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "menuList[0].icon",
+            "in": "query",
+            "description": "菜单图标",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "menuList[0].id",
+            "in": "query",
+            "description": "主键",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "menuList[0].menusIndex",
+            "in": "query",
+            "description": "一级菜单索引",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "menuList[0].parentId",
+            "in": "query",
+            "description": "父级Id",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "menuList[0].path",
+            "in": "query",
+            "description": "菜单路径",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "menuList[0].title",
+            "in": "query",
+            "description": "菜单标题",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "nickname",
+            "in": "query",
+            "description": "真实姓名（模糊查询）",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "页面显示数目",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "密码",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "roleId",
+            "in": "query",
+            "description": "角色ID（固定为1）",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "description": "账号（模糊查询）",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Page«User对象»»",
+              "originalRef": "ResultVo«Page«User对象»»"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/user/login": {
+      "get": {
+        "tags": ["用户管理"],
+        "summary": "用户登录接口",
+        "operationId": "loginUsingGET",
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "captcha",
+            "in": "query",
+            "description": "验证码",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "captchaId",
+            "in": "query",
+            "description": "验证码ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "用户登录密码",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "roleId",
+            "in": "query",
+            "description": "用户角色ID",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "description": "用户登录账号",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«UserDTO»",
+              "originalRef": "ResultVo«UserDTO»"
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/user/remove": {
+      "post": {
+        "tags": ["用户管理"],
+        "summary": "删除用户",
+        "operationId": "removeUsingPOST_1",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "params",
+            "description": "params",
+            "required": true,
+            "schema": { "type": "object" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    },
+    "/user/update": {
+      "post": {
+        "tags": ["用户管理"],
+        "summary": "修改用户",
+        "operationId": "updateUsingPOST_1",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "description": "user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User对象",
+              "originalRef": "User对象"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResultVo«Void»",
+              "originalRef": "ResultVo«Void»"
+            }
+          },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "DiagnosisDTO": {
+      "type": "object",
+      "properties": {
+        "diagnoseDoctor": { "type": "string", "description": "诊断医生" },
+        "diagnosisDate": {
+          "type": "string",
+          "format": "date",
+          "description": "诊断日期"
+        },
+        "diagnosisType": { "type": "string", "description": "诊断类型" },
+        "diseaseId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "疾病ID"
+        },
+        "diseaseName": { "type": "string", "description": "疾病名称" },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "page": { "type": "integer", "format": "int32", "description": "页码" },
+        "patientId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "患者ID"
+        },
+        "remark": { "type": "string", "description": "诊断说明" }
+      },
+      "title": "DiagnosisDTO",
+      "description": "诊断分页/操作DTO"
+    },
+    "DiagnosisVo": {
+      "type": "object",
+      "properties": {
+        "diagnoseDoctor": { "type": "string", "description": "诊断医生" },
+        "diagnosisDate": {
+          "type": "string",
+          "format": "date",
+          "description": "诊断日期"
+        },
+        "diagnosisType": { "type": "string", "description": "诊断类型" },
+        "diseaseId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "疾病ID"
+        },
+        "diseaseName": { "type": "string", "description": "疾病名称" },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "patientId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "患者ID"
+        },
+        "remark": { "type": "string", "description": "诊断说明" }
+      },
+      "title": "DiagnosisVo",
+      "description": "诊断分页VO"
+    },
+    "Disease": {
+      "type": "object",
+      "properties": {
+        "diseaseCode": { "type": "string", "description": "疾病编码" },
+        "diseaseName": { "type": "string", "description": "疾病名称" },
+        "diseaseType": { "type": "string", "description": "疾病类型）" },
+        "icdCode": { "type": "string", "description": "ICD编码" },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "remark": { "type": "string", "description": "备注" }
+      },
+      "title": "Disease",
+      "description": "疾病信息实体对象"
+    },
+    "DiseaseVo": {
+      "type": "object",
+      "properties": {
+        "diseaseCode": { "type": "string", "description": "疾病编码" },
+        "diseaseName": { "type": "string", "description": "疾病名称" },
+        "diseaseType": { "type": "string", "description": "疾病类型" },
+        "icdCode": { "type": "string", "description": "ICD编码" },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "remark": { "type": "string", "description": "备注" }
+      },
+      "title": "DiseaseVo",
+      "description": "DiseaseVo"
+    },
+    "DrugDTO": {
+      "type": "object",
+      "properties": {
+        "drugName": { "type": "string", "description": "通用名称" },
+        "drugType": { "type": "string", "description": "医保类型" },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "manufacturer": { "type": "string", "description": "生产企业" },
+        "page": { "type": "integer", "format": "int32", "description": "页码" },
+        "price": { "type": "number", "description": "单价" },
+        "remark": { "type": "string", "description": "适应症/禁忌症等" },
+        "specification": { "type": "string", "description": "规格" },
+        "tradeName": { "type": "string", "description": "商品名称" },
+        "unit": { "type": "string", "description": "计价单位" }
+      },
+      "title": "DrugDTO",
+      "description": "DrugDTO"
+    },
+    "DrugOrderDTO": {
+      "type": "object",
+      "properties": {
+        "doctorName": { "type": "string", "description": "开单医生" },
+        "drugId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "药品ID（关联药品表）"
+        },
+        "drugType": { "type": "string", "description": "医保类型" },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "orderTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "开单时间"
+        },
+        "page": { "type": "integer", "format": "int32", "description": "页码" },
+        "patientId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "患者ID"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "药品数量"
+        }
+      },
+      "title": "DrugOrderDTO",
+      "description": "DrugOrderDTO"
+    },
+    "DrugOrderVo": {
+      "type": "object",
+      "properties": {
+        "doctorName": { "type": "string", "description": "开单医生" },
+        "drugId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "药品ID（关联药品表）"
+        },
+        "drugName": { "type": "string", "description": "通用名称" },
+        "drugType": { "type": "string", "description": "医保类型" },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "manufacturer": { "type": "string", "description": "生产企业" },
+        "orderTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "开单时间"
+        },
+        "patientId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "患者ID"
+        },
+        "price": { "type": "number", "description": "单价" },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "药品数量"
+        },
+        "specification": { "type": "string", "description": "规格（50mg/片）" },
+        "unit": { "type": "string", "description": "计价单位（片/盒等）" }
+      },
+      "title": "DrugOrderVo",
+      "description": "药品订单信息实体对象"
+    },
+    "DrugRbRatioDTO": {
+      "type": "object",
+      "properties": {
+        "drugRatio": {
+          "type": "number",
+          "description": "报销比例（0-1之间的小数）"
+        },
+        "drugType": {
+          "type": "string",
+          "description": "药品类型（甲类/乙类/丙类）"
+        },
+        "effectiveDate": {
+          "type": "string",
+          "format": "date",
+          "description": "生效日期"
+        },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "page": { "type": "integer", "format": "int32", "description": "页码" },
+        "status": { "type": "string", "description": "状态（启用/停用）" }
+      },
+      "title": "DrugRbRatioDTO",
+      "description": "DrugRbRatioDTO"
+    },
+    "DrugRbRatioVo": {
+      "type": "object",
+      "properties": {
+        "drugRatio": {
+          "type": "number",
+          "description": "报销比例（0-1之间的小数）"
+        },
+        "drugType": {
+          "type": "string",
+          "description": "药品类型（甲类/乙类/丙类）"
+        },
+        "effectiveDate": {
+          "type": "string",
+          "format": "date",
+          "description": "生效日期"
+        },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "status": { "type": "string", "description": "状态（启用/停用）" }
+      },
+      "title": "DrugRbRatioVo",
+      "description": "DrugRbRatioVo"
+    },
+    "DrugVo": {
+      "type": "object",
+      "properties": {
+        "drugName": { "type": "string", "description": "通用名称" },
+        "drugType": { "type": "string", "description": "医保类型" },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "manufacturer": { "type": "string", "description": "生产企业" },
+        "price": { "type": "number", "description": "单价" },
+        "remark": { "type": "string", "description": "适应症/禁忌症等" },
+        "specification": { "type": "string", "description": "规格" },
+        "tradeName": { "type": "string", "description": "商品名称" },
+        "unit": { "type": "string", "description": "计价单位" }
+      },
+      "title": "DrugVo",
+      "description": "药品分页VO"
+    },
+    "File": {
+      "type": "object",
+      "properties": {
+        "absolute": { "type": "boolean" },
+        "absoluteFile": { "$ref": "#/definitions/File", "originalRef": "File" },
+        "absolutePath": { "type": "string" },
+        "canonicalFile": {
+          "$ref": "#/definitions/File",
+          "originalRef": "File"
+        },
+        "canonicalPath": { "type": "string" },
+        "directory": { "type": "boolean" },
+        "file": { "type": "boolean" },
+        "freeSpace": { "type": "integer", "format": "int64" },
+        "hidden": { "type": "boolean" },
+        "name": { "type": "string" },
+        "parent": { "type": "string" },
+        "parentFile": { "$ref": "#/definitions/File", "originalRef": "File" },
+        "path": { "type": "string" },
+        "totalSpace": { "type": "integer", "format": "int64" },
+        "usableSpace": { "type": "integer", "format": "int64" }
+      },
+      "title": "File"
+    },
+    "InputStream": { "type": "object", "title": "InputStream" },
+    "Insureder": {
+      "type": "object",
+      "properties": {
+        "address": { "type": "string", "description": "家庭地址" },
+        "admissionTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "入院时间"
+        },
+        "age": { "type": "integer", "format": "int32", "description": "年龄" },
+        "birthDate": {
+          "type": "string",
+          "format": "date",
+          "description": "出生日期"
+        },
+        "contactPhone": { "type": "string", "description": "联系电话" },
+        "dischargeTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "出院时间"
+        },
+        "emergencyContact": { "type": "string", "description": "紧急联系人" },
+        "gender": {
+          "type": "integer",
+          "format": "int32",
+          "description": "性别 0-女 1-男 2-未知"
+        },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "idCard": { "type": "string", "description": "身份证号" },
+        "inpatientNo": { "type": "string", "description": "住院号" },
+        "name": { "type": "string", "description": "姓名" },
+        "page": { "type": "integer", "format": "int32", "description": "页码" },
+        "settlementType": { "type": "string", "description": "结算类型" },
+        "workStatus": { "type": "string", "description": "工作状态" }
+      },
+      "title": "Insureder",
+      "description": "患者信息实体对象"
+    },
+    "InsurederVo": {
+      "type": "object",
+      "properties": {
+        "address": { "type": "string", "description": "家庭地址" },
+        "admissionTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "入院时间"
+        },
+        "age": { "type": "integer", "format": "int32", "description": "年龄" },
+        "birthDate": {
+          "type": "string",
+          "format": "date",
+          "description": "出生日期"
+        },
+        "contactPhone": { "type": "string", "description": "联系电话" },
+        "dischargeTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "出院时间"
+        },
+        "emergencyContact": { "type": "string", "description": "紧急联系人" },
+        "gender": {
+          "type": "integer",
+          "format": "int32",
+          "description": "性别 0-女 1-男 2-未知"
+        },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "idCard": { "type": "string", "description": "身份证号" },
+        "inpatientNo": { "type": "string", "description": "住院号" },
+        "name": { "type": "string", "description": "姓名" },
+        "settlementType": { "type": "string", "description": "结算类型" },
+        "workStatus": { "type": "string", "description": "工作状态" }
+      },
+      "title": "InsurederVo"
+    },
+    "Map«string,string»": {
+      "type": "object",
+      "title": "Map«string,string»",
+      "additionalProperties": { "type": "string" }
+    },
+    "MedicalServiceDTO": {
+      "type": "object",
+      "properties": {
+        "description": { "type": "string", "description": "项目详情说明" },
+        "exclusion": { "type": "string", "description": "除外内容" },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "itemCode": { "type": "string", "description": "项目编码" },
+        "itemName": { "type": "string", "description": "项目名称" },
+        "itemType": { "type": "string", "description": "财务分类" },
+        "nationalCode": { "type": "string", "description": "国家统一编码" },
+        "page": { "type": "integer", "format": "int32", "description": "页码" },
+        "price": { "type": "number", "description": "单价" },
+        "remark": { "type": "string", "description": "备注" },
+        "unit": { "type": "string", "description": "计价单位（次/小时等）" }
+      },
+      "title": "MedicalServiceDTO",
+      "description": "MedicalServiceDTO"
+    },
+    "MedicalServiceOrderDTO": {
+      "type": "object",
+      "properties": {
+        "doctorName": { "type": "string", "description": "开单医生姓名" },
+        "executeStatus": {
+          "type": "string",
+          "description": "执行状态（'未执行','执行中','已执行','取消'）"
+        },
+        "executeTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "执行时间"
+        },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "itemId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "项目ID（关联药品、服务或诊疗项目）"
+        },
+        "nurseName": { "type": "string", "description": "执行护士姓名" },
+        "orderTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "开单时间"
+        },
+        "page": { "type": "integer", "format": "int32", "description": "页码" },
+        "patientId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "患者ID"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "数量"
+        }
+      },
+      "title": "MedicalServiceOrderDTO",
+      "description": "MedicalServiceOrderDTO"
+    },
+    "MedicalServiceOrderVo": {
+      "type": "object",
+      "properties": {
+        "description": { "type": "string", "description": "项目详情说明" },
+        "doctorName": { "type": "string", "description": "开单医生姓名" },
+        "exclusion": { "type": "string", "description": "除外内容" },
+        "executeStatus": {
+          "type": "string",
+          "description": "执行状态（'未执行','执行中','已执行','取消'）"
+        },
+        "executeTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "执行时间"
+        },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "itemCode": { "type": "string", "description": "项目编码" },
+        "itemId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "项目ID（关联药品、服务或诊疗项目）"
+        },
+        "itemName": { "type": "string", "description": "项目名称" },
+        "itemType": { "type": "string", "description": "财务分类" },
+        "nationalCode": { "type": "string", "description": "国家统一编码" },
+        "nurseName": { "type": "string", "description": "执行护士姓名" },
+        "orderTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "开单时间"
+        },
+        "patientId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "患者ID"
+        },
+        "price": { "type": "number", "description": "单价" },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "数量"
+        },
+        "remark": { "type": "string", "description": "备注" },
+        "unit": { "type": "string", "description": "计价单位（次/小时等）" }
+      },
+      "title": "MedicalServiceOrderVo",
+      "description": "MedicalServiceOrderVo"
+    },
+    "MedicalServiceVo": {
+      "type": "object",
+      "properties": {
+        "description": { "type": "string", "description": "项目详情说明" },
+        "exclusion": { "type": "string", "description": "除外内容" },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "itemCode": { "type": "string", "description": "项目编码" },
+        "itemName": { "type": "string", "description": "项目名称" },
+        "itemType": { "type": "string", "description": "财务分类" },
+        "nationalCode": { "type": "string", "description": "国家统一编码" },
+        "price": { "type": "number", "description": "单价" },
+        "remark": { "type": "string", "description": "备注" },
+        "unit": { "type": "string", "description": "计价单位（次/小时等）" }
+      },
+      "title": "MedicalServiceVo",
+      "description": "MedicalServiceVo"
+    },
+    "Menu": {
+      "type": "object",
+      "properties": {
+        "children": {
+          "type": "array",
+          "description": "子菜单",
+          "items": { "$ref": "#/definitions/Menu", "originalRef": "Menu" }
+        },
+        "icon": { "type": "string", "description": "菜单图标" },
+        "id": { "type": "integer", "format": "int32", "description": "主键" },
+        "menusIndex": { "type": "string", "description": "一级菜单索引" },
+        "parentId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "父级Id"
+        },
+        "path": { "type": "string", "description": "菜单路径" },
+        "title": { "type": "string", "description": "菜单标题" }
+      },
+      "title": "Menu",
+      "description": "Menu实体对象"
+    },
+    "OrderItem": {
+      "type": "object",
+      "properties": {
+        "asc": { "type": "boolean" },
+        "column": { "type": "string" }
+      },
+      "title": "OrderItem"
+    },
+    "Page«DiagnosisVo»": {
+      "type": "object",
+      "properties": {
+        "countId": { "type": "string" },
+        "current": { "type": "integer", "format": "int64" },
+        "hitCount": { "type": "boolean" },
+        "maxLimit": { "type": "integer", "format": "int64" },
+        "optimizeCountSql": { "type": "boolean" },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderItem",
+            "originalRef": "OrderItem"
+          }
+        },
+        "pages": { "type": "integer", "format": "int64" },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DiagnosisVo",
+            "originalRef": "DiagnosisVo"
+          }
+        },
+        "searchCount": { "type": "boolean" },
+        "size": { "type": "integer", "format": "int64" },
+        "total": { "type": "integer", "format": "int64" }
+      },
+      "title": "Page«DiagnosisVo»"
+    },
+    "Page«DiseaseVo»": {
+      "type": "object",
+      "properties": {
+        "countId": { "type": "string" },
+        "current": { "type": "integer", "format": "int64" },
+        "hitCount": { "type": "boolean" },
+        "maxLimit": { "type": "integer", "format": "int64" },
+        "optimizeCountSql": { "type": "boolean" },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderItem",
+            "originalRef": "OrderItem"
+          }
+        },
+        "pages": { "type": "integer", "format": "int64" },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DiseaseVo",
+            "originalRef": "DiseaseVo"
+          }
+        },
+        "searchCount": { "type": "boolean" },
+        "size": { "type": "integer", "format": "int64" },
+        "total": { "type": "integer", "format": "int64" }
+      },
+      "title": "Page«DiseaseVo»"
+    },
+    "Page«DrugOrderVo»": {
+      "type": "object",
+      "properties": {
+        "countId": { "type": "string" },
+        "current": { "type": "integer", "format": "int64" },
+        "hitCount": { "type": "boolean" },
+        "maxLimit": { "type": "integer", "format": "int64" },
+        "optimizeCountSql": { "type": "boolean" },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderItem",
+            "originalRef": "OrderItem"
+          }
+        },
+        "pages": { "type": "integer", "format": "int64" },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DrugOrderVo",
+            "originalRef": "DrugOrderVo"
+          }
+        },
+        "searchCount": { "type": "boolean" },
+        "size": { "type": "integer", "format": "int64" },
+        "total": { "type": "integer", "format": "int64" }
+      },
+      "title": "Page«DrugOrderVo»"
+    },
+    "Page«DrugRbRatioVo»": {
+      "type": "object",
+      "properties": {
+        "countId": { "type": "string" },
+        "current": { "type": "integer", "format": "int64" },
+        "hitCount": { "type": "boolean" },
+        "maxLimit": { "type": "integer", "format": "int64" },
+        "optimizeCountSql": { "type": "boolean" },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderItem",
+            "originalRef": "OrderItem"
+          }
+        },
+        "pages": { "type": "integer", "format": "int64" },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DrugRbRatioVo",
+            "originalRef": "DrugRbRatioVo"
+          }
+        },
+        "searchCount": { "type": "boolean" },
+        "size": { "type": "integer", "format": "int64" },
+        "total": { "type": "integer", "format": "int64" }
+      },
+      "title": "Page«DrugRbRatioVo»"
+    },
+    "Page«DrugVo»": {
+      "type": "object",
+      "properties": {
+        "countId": { "type": "string" },
+        "current": { "type": "integer", "format": "int64" },
+        "hitCount": { "type": "boolean" },
+        "maxLimit": { "type": "integer", "format": "int64" },
+        "optimizeCountSql": { "type": "boolean" },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderItem",
+            "originalRef": "OrderItem"
+          }
+        },
+        "pages": { "type": "integer", "format": "int64" },
+        "records": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/DrugVo", "originalRef": "DrugVo" }
+        },
+        "searchCount": { "type": "boolean" },
+        "size": { "type": "integer", "format": "int64" },
+        "total": { "type": "integer", "format": "int64" }
+      },
+      "title": "Page«DrugVo»"
+    },
+    "Page«InsurederVo»": {
+      "type": "object",
+      "properties": {
+        "countId": { "type": "string" },
+        "current": { "type": "integer", "format": "int64" },
+        "hitCount": { "type": "boolean" },
+        "maxLimit": { "type": "integer", "format": "int64" },
+        "optimizeCountSql": { "type": "boolean" },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderItem",
+            "originalRef": "OrderItem"
+          }
+        },
+        "pages": { "type": "integer", "format": "int64" },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InsurederVo",
+            "originalRef": "InsurederVo"
+          }
+        },
+        "searchCount": { "type": "boolean" },
+        "size": { "type": "integer", "format": "int64" },
+        "total": { "type": "integer", "format": "int64" }
+      },
+      "title": "Page«InsurederVo»"
+    },
+    "Page«MedicalServiceOrderVo»": {
+      "type": "object",
+      "properties": {
+        "countId": { "type": "string" },
+        "current": { "type": "integer", "format": "int64" },
+        "hitCount": { "type": "boolean" },
+        "maxLimit": { "type": "integer", "format": "int64" },
+        "optimizeCountSql": { "type": "boolean" },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderItem",
+            "originalRef": "OrderItem"
+          }
+        },
+        "pages": { "type": "integer", "format": "int64" },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MedicalServiceOrderVo",
+            "originalRef": "MedicalServiceOrderVo"
+          }
+        },
+        "searchCount": { "type": "boolean" },
+        "size": { "type": "integer", "format": "int64" },
+        "total": { "type": "integer", "format": "int64" }
+      },
+      "title": "Page«MedicalServiceOrderVo»"
+    },
+    "Page«MedicalServiceVo»": {
+      "type": "object",
+      "properties": {
+        "countId": { "type": "string" },
+        "current": { "type": "integer", "format": "int64" },
+        "hitCount": { "type": "boolean" },
+        "maxLimit": { "type": "integer", "format": "int64" },
+        "optimizeCountSql": { "type": "boolean" },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderItem",
+            "originalRef": "OrderItem"
+          }
+        },
+        "pages": { "type": "integer", "format": "int64" },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MedicalServiceVo",
+            "originalRef": "MedicalServiceVo"
+          }
+        },
+        "searchCount": { "type": "boolean" },
+        "size": { "type": "integer", "format": "int64" },
+        "total": { "type": "integer", "format": "int64" }
+      },
+      "title": "Page«MedicalServiceVo»"
+    },
+    "Page«ReimbursementRatioVo»": {
+      "type": "object",
+      "properties": {
+        "countId": { "type": "string" },
+        "current": { "type": "integer", "format": "int64" },
+        "hitCount": { "type": "boolean" },
+        "maxLimit": { "type": "integer", "format": "int64" },
+        "optimizeCountSql": { "type": "boolean" },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderItem",
+            "originalRef": "OrderItem"
+          }
+        },
+        "pages": { "type": "integer", "format": "int64" },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReimbursementRatioVo",
+            "originalRef": "ReimbursementRatioVo"
+          }
+        },
+        "searchCount": { "type": "boolean" },
+        "size": { "type": "integer", "format": "int64" },
+        "total": { "type": "integer", "format": "int64" }
+      },
+      "title": "Page«ReimbursementRatioVo»"
+    },
+    "Page«TreatmentItemVo»": {
+      "type": "object",
+      "properties": {
+        "countId": { "type": "string" },
+        "current": { "type": "integer", "format": "int64" },
+        "hitCount": { "type": "boolean" },
+        "maxLimit": { "type": "integer", "format": "int64" },
+        "optimizeCountSql": { "type": "boolean" },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderItem",
+            "originalRef": "OrderItem"
+          }
+        },
+        "pages": { "type": "integer", "format": "int64" },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TreatmentItemVo",
+            "originalRef": "TreatmentItemVo"
+          }
+        },
+        "searchCount": { "type": "boolean" },
+        "size": { "type": "integer", "format": "int64" },
+        "total": { "type": "integer", "format": "int64" }
+      },
+      "title": "Page«TreatmentItemVo»"
+    },
+    "Page«TreatmentOrderVo»": {
+      "type": "object",
+      "properties": {
+        "countId": { "type": "string" },
+        "current": { "type": "integer", "format": "int64" },
+        "hitCount": { "type": "boolean" },
+        "maxLimit": { "type": "integer", "format": "int64" },
+        "optimizeCountSql": { "type": "boolean" },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderItem",
+            "originalRef": "OrderItem"
+          }
+        },
+        "pages": { "type": "integer", "format": "int64" },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TreatmentOrderVo",
+            "originalRef": "TreatmentOrderVo"
+          }
+        },
+        "searchCount": { "type": "boolean" },
+        "size": { "type": "integer", "format": "int64" },
+        "total": { "type": "integer", "format": "int64" }
+      },
+      "title": "Page«TreatmentOrderVo»"
+    },
+    "Page«User对象»": {
+      "type": "object",
+      "properties": {
+        "countId": { "type": "string" },
+        "current": { "type": "integer", "format": "int64" },
+        "hitCount": { "type": "boolean" },
+        "maxLimit": { "type": "integer", "format": "int64" },
+        "optimizeCountSql": { "type": "boolean" },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderItem",
+            "originalRef": "OrderItem"
+          }
+        },
+        "pages": { "type": "integer", "format": "int64" },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/User对象",
+            "originalRef": "User对象"
+          }
+        },
+        "searchCount": { "type": "boolean" },
+        "size": { "type": "integer", "format": "int64" },
+        "total": { "type": "integer", "format": "int64" }
+      },
+      "title": "Page«User对象»"
+    },
+    "ReimbursementRatioDTO": {
+      "type": "object",
+      "properties": {
+        "deductible": { "type": "number", "description": "起付线" },
+        "drugAFee": {
+          "type": "number",
+          "description": "甲类药品费用（已乘药品报销比例）"
+        },
+        "drugBFee": {
+          "type": "number",
+          "description": "乙类药品费用（已乘药品报销比例）"
+        },
+        "drugCFee": {
+          "type": "number",
+          "description": "丙类药品费用（已乘药品报销比例）"
+        },
+        "itemFee": { "type": "number", "description": "诊疗项目费用" },
+        "ratio": { "type": "number", "description": "综合报销比例" },
+        "reimbursable": { "type": "number", "description": "可报销费用" },
+        "reimbursementAmount": { "type": "number", "description": "报销费用" },
+        "selfPayAmount": { "type": "number", "description": "自费费用" },
+        "serviceFee": { "type": "number", "description": "医疗服务费用" },
+        "totalFee": { "type": "number", "description": "总费用" }
+      },
+      "title": "ReimbursementRatioDTO"
+    },
+    "ReimbursementRatioVo": {
+      "type": "object",
+      "properties": {
+        "effectiveDate": {
+          "type": "string",
+          "format": "date",
+          "description": "生效日期"
+        },
+        "endAmount": { "type": "number", "description": "封顶金额" },
+        "hospitalLevel": {
+          "type": "string",
+          "description": "医院等级 '三级','二级','一级','社区'"
+        },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "ratio": { "type": "number", "description": "药品报销比例" },
+        "remark": { "type": "string", "description": "备注" },
+        "staffType": {
+          "type": "string",
+          "description": "人员类型 '在职','退休','无业','学生'"
+        },
+        "startAmount": { "type": "number", "description": "起付金额" },
+        "status": { "type": "string", "description": "状态（启用/停用）" }
+      },
+      "title": "ReimbursementRatioVo",
+      "description": "ReimbursementRatioVo"
+    },
+    "ReimbursementRecordDTO": {
+      "type": "object",
+      "properties": {
+        "deductibleAmount": { "type": "number", "description": "起付金额" },
+        "hospitalId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "医院ID"
+        },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "idCard": { "type": "string", "description": "身份证号" },
+        "inpatientNo": { "type": "string", "description": "住院号" },
+        "name": { "type": "string", "description": "姓名" },
+        "operator": { "type": "string", "description": "操作员" },
+        "page": { "type": "integer", "format": "int32", "description": "页码" },
+        "patientId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "患者ID"
+        },
+        "reimbursableAmount": { "type": "number", "description": "可报销金额" },
+        "reimbursementAmount": {
+          "type": "number",
+          "description": "实际报销金额"
+        },
+        "reimbursementDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "报销日期"
+        },
+        "reimbursementRatio": { "type": "number", "description": "报销比例" },
+        "remark": { "type": "string", "description": "备注" },
+        "selfPayAmount": { "type": "number", "description": "自付金额" },
+        "totalMedicalFee": { "type": "number", "description": "总医疗费用" },
+        "workStatus": {
+          "type": "string",
+          "description": "工作状态 '在职','退休','无业','学生'"
+        }
+      },
+      "title": "ReimbursementRecordDTO",
+      "description": "ReimbursementRecordDTO"
+    },
+    "Resource": {
+      "type": "object",
+      "properties": {
+        "description": { "type": "string" },
+        "file": { "$ref": "#/definitions/File", "originalRef": "File" },
+        "filename": { "type": "string" },
+        "inputStream": {
+          "$ref": "#/definitions/InputStream",
+          "originalRef": "InputStream"
+        },
+        "open": { "type": "boolean" },
+        "readable": { "type": "boolean" },
+        "uri": { "$ref": "#/definitions/URI", "originalRef": "URI" },
+        "url": { "$ref": "#/definitions/URL", "originalRef": "URL" }
+      },
+      "title": "Resource"
+    },
+    "ResultVo«List«DrugRbRatioVo»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DrugRbRatioVo",
+            "originalRef": "DrugRbRatioVo"
+          }
+        },
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«List«DrugRbRatioVo»»"
+    },
+    "ResultVo«Map«string,string»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«Map«string,string»»"
+    },
+    "ResultVo«Page«DiagnosisVo»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Page«DiagnosisVo»",
+          "originalRef": "Page«DiagnosisVo»"
+        },
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«Page«DiagnosisVo»»"
+    },
+    "ResultVo«Page«DiseaseVo»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Page«DiseaseVo»",
+          "originalRef": "Page«DiseaseVo»"
+        },
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«Page«DiseaseVo»»"
+    },
+    "ResultVo«Page«DrugOrderVo»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Page«DrugOrderVo»",
+          "originalRef": "Page«DrugOrderVo»"
+        },
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«Page«DrugOrderVo»»"
+    },
+    "ResultVo«Page«DrugRbRatioVo»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Page«DrugRbRatioVo»",
+          "originalRef": "Page«DrugRbRatioVo»"
+        },
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«Page«DrugRbRatioVo»»"
+    },
+    "ResultVo«Page«DrugVo»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Page«DrugVo»",
+          "originalRef": "Page«DrugVo»"
+        },
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«Page«DrugVo»»"
+    },
+    "ResultVo«Page«InsurederVo»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Page«InsurederVo»",
+          "originalRef": "Page«InsurederVo»"
+        },
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«Page«InsurederVo»»"
+    },
+    "ResultVo«Page«MedicalServiceOrderVo»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Page«MedicalServiceOrderVo»",
+          "originalRef": "Page«MedicalServiceOrderVo»"
+        },
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«Page«MedicalServiceOrderVo»»"
+    },
+    "ResultVo«Page«MedicalServiceVo»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Page«MedicalServiceVo»",
+          "originalRef": "Page«MedicalServiceVo»"
+        },
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«Page«MedicalServiceVo»»"
+    },
+    "ResultVo«Page«ReimbursementRatioVo»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Page«ReimbursementRatioVo»",
+          "originalRef": "Page«ReimbursementRatioVo»"
+        },
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«Page«ReimbursementRatioVo»»"
+    },
+    "ResultVo«Page«TreatmentItemVo»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Page«TreatmentItemVo»",
+          "originalRef": "Page«TreatmentItemVo»"
+        },
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«Page«TreatmentItemVo»»"
+    },
+    "ResultVo«Page«TreatmentOrderVo»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Page«TreatmentOrderVo»",
+          "originalRef": "Page«TreatmentOrderVo»"
+        },
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«Page«TreatmentOrderVo»»"
+    },
+    "ResultVo«Page«User对象»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Page«User对象»",
+          "originalRef": "Page«User对象»"
+        },
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«Page«User对象»»"
+    },
+    "ResultVo«ReimbursementRatioDTO»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/ReimbursementRatioDTO",
+          "originalRef": "ReimbursementRatioDTO"
+        },
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«ReimbursementRatioDTO»"
+    },
+    "ResultVo«UserDTO»": {
+      "type": "object",
+      "properties": {
+        "data": { "$ref": "#/definitions/UserDTO", "originalRef": "UserDTO" },
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«UserDTO»"
+    },
+    "ResultVo«Void»": {
+      "type": "object",
+      "properties": {
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«Void»"
+    },
+    "ResultVo«string»": {
+      "type": "object",
+      "properties": {
+        "data": { "type": "string" },
+        "flag": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "title": "ResultVo«string»"
+    },
+    "TreatmentItemDTO": {
+      "type": "object",
+      "properties": {
+        "description": { "type": "string", "description": "项目详情说明" },
+        "exclusion": { "type": "string", "description": "除外内容" },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "itemCode": { "type": "string", "description": "项目编码" },
+        "itemName": { "type": "string", "description": "项目名称" },
+        "itemType": { "type": "string", "description": "财务分类" },
+        "nationalCode": { "type": "string", "description": "国家统一编码" },
+        "page": { "type": "integer", "format": "int32", "description": "页码" },
+        "price": { "type": "number", "description": "单价" },
+        "remark": { "type": "string", "description": "备注" },
+        "unit": { "type": "string", "description": "计价单位（次/小时等）" }
+      },
+      "title": "TreatmentItemDTO",
+      "description": "TreatmentItemDTO"
+    },
+    "TreatmentItemOrderDTO": {
+      "type": "object",
+      "properties": {
+        "doctorName": { "type": "string", "description": "开单医生姓名" },
+        "executeStatus": {
+          "type": "string",
+          "description": "执行状态（'未执行','执行中','已执行','取消'）"
+        },
+        "executeTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "执行时间"
+        },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "itemId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "项目ID（关联药品、服务或诊疗项目）"
+        },
+        "nurseName": { "type": "string", "description": "执行护士姓名" },
+        "orderTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "开单时间"
+        },
+        "page": { "type": "integer", "format": "int32", "description": "页码" },
+        "patientId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "患者ID"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "数量"
+        }
+      },
+      "title": "TreatmentItemOrderDTO",
+      "description": "TreatmentItemOrderDTO"
+    },
+    "TreatmentItemVo": {
+      "type": "object",
+      "properties": {
+        "description": { "type": "string", "description": "项目详情说明" },
+        "exclusion": { "type": "string", "description": "除外内容" },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "itemCode": { "type": "string", "description": "项目编码" },
+        "itemName": { "type": "string", "description": "项目名称" },
+        "itemType": { "type": "string", "description": "财务分类" },
+        "nationalCode": { "type": "string", "description": "国家统一编码" },
+        "price": { "type": "number", "description": "单价" },
+        "remark": { "type": "string", "description": "备注" },
+        "unit": { "type": "string", "description": "计价单位（次/小时等）" }
+      },
+      "title": "TreatmentItemVo",
+      "description": "TreatmentItemVo"
+    },
+    "TreatmentOrderVo": {
+      "type": "object",
+      "properties": {
+        "description": { "type": "string", "description": "项目详情说明" },
+        "doctorName": { "type": "string", "description": "开单医生姓名" },
+        "exclusion": { "type": "string", "description": "除外内容" },
+        "executeStatus": {
+          "type": "string",
+          "description": "执行状态（'未执行','执行中','已执行','取消'）"
+        },
+        "executeTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "执行时间"
+        },
+        "id": { "type": "integer", "format": "int32", "description": "主键ID" },
+        "itemCode": { "type": "string", "description": "项目编码" },
+        "itemId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "项目ID（关联药品、服务或诊疗项目）"
+        },
+        "itemName": { "type": "string", "description": "项目名称" },
+        "itemType": { "type": "string", "description": "财务分类" },
+        "nationalCode": { "type": "string", "description": "国家统一编码" },
+        "nurseName": { "type": "string", "description": "执行护士姓名" },
+        "orderTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "开单时间"
+        },
+        "patientId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "患者ID"
+        },
+        "price": { "type": "number", "description": "单价" },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "数量"
+        },
+        "remark": { "type": "string", "description": "备注" },
+        "unit": { "type": "string", "description": "计价单位（次/小时等）" }
+      },
+      "title": "TreatmentOrderVo",
+      "description": "TreatmentOrderVo"
+    },
+    "URI": {
+      "type": "object",
+      "properties": {
+        "absolute": { "type": "boolean" },
+        "authority": { "type": "string" },
+        "fragment": { "type": "string" },
+        "host": { "type": "string" },
+        "opaque": { "type": "boolean" },
+        "path": { "type": "string" },
+        "port": { "type": "integer", "format": "int32" },
+        "query": { "type": "string" },
+        "rawAuthority": { "type": "string" },
+        "rawFragment": { "type": "string" },
+        "rawPath": { "type": "string" },
+        "rawQuery": { "type": "string" },
+        "rawSchemeSpecificPart": { "type": "string" },
+        "rawUserInfo": { "type": "string" },
+        "scheme": { "type": "string" },
+        "schemeSpecificPart": { "type": "string" },
+        "userInfo": { "type": "string" }
+      },
+      "title": "URI"
+    },
+    "URL": {
+      "type": "object",
+      "properties": {
+        "authority": { "type": "string" },
+        "content": { "type": "object" },
+        "defaultPort": { "type": "integer", "format": "int32" },
+        "file": { "type": "string" },
+        "host": { "type": "string" },
+        "path": { "type": "string" },
+        "port": { "type": "integer", "format": "int32" },
+        "protocol": { "type": "string" },
+        "query": { "type": "string" },
+        "ref": { "type": "string" },
+        "userInfo": { "type": "string" }
+      },
+      "title": "URL"
+    },
+    "UserDTO": {
+      "type": "object",
+      "properties": {
+        "currentPage": {
+          "type": "integer",
+          "format": "int32",
+          "description": "当前页码"
+        },
+        "id": { "type": "integer", "format": "int32", "description": "主键" },
+        "menuList": {
+          "type": "array",
+          "description": "角色菜单",
+          "items": { "$ref": "#/definitions/Menu", "originalRef": "Menu" }
+        },
+        "nickname": { "type": "string", "description": "真实姓名" },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "description": "页面显示数目"
+        },
+        "password": { "type": "string", "description": "密码" },
+        "roleId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "系统角色编号 0-管理员 1-医院 2-费用报销"
+        },
+        "username": { "type": "string", "description": "用户名" }
+      },
+      "title": "UserDTO"
+    },
+    "User对象": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "integer", "format": "int32", "description": "主键" },
+        "nickname": { "type": "string", "description": "真实姓名" },
+        "password": { "type": "string", "description": "密码" },
+        "roleId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "系统角色编号 0-管理员 1-医院 2-"
+        },
+        "username": { "type": "string", "description": "用户名" }
+      },
+      "title": "User对象",
+      "description": "User实体对象"
+    }
+  }
+}

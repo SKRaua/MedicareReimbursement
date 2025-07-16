@@ -48,6 +48,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/logout", // 登出接口放行
                         "/static/**", // 静态资源放行
                         "/images/**", // 图片资源放行
+                        "/pdf/download/**", // PDF下载接口放行
                         "favicon.ico", // 网站图标放行
                         // 排除Swagger相关路径（关键）
                         "/swagger-ui.html",
@@ -60,11 +61,20 @@ public class WebConfig implements WebMvcConfigurer {
     // 全局跨域配置
     @Override
     public void addCorsMappings(@NonNull CorsRegistry registry) {
+        // 一般API接口的CORS配置
         registry.addMapping("/**") // 所有接口
                 .allowedOriginPatterns("*") // 允许所有前端域名
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)
+                .maxAge(3600);
+
+        // PDF下载接口的特殊CORS配置（不使用credentials）
+        registry.addMapping("/pdf/download/**")
+                .allowedOrigins("*") // PDF下载不需要credentials，可以使用 *
+                .allowedMethods("GET", "HEAD", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(false) // 不使用credentials
                 .maxAge(3600);
     }
 

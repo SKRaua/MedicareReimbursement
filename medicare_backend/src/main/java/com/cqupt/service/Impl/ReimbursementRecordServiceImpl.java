@@ -6,6 +6,7 @@ import com.cqupt.dto.ReimbursementCalcDTO;
 import com.cqupt.dto.ReimbursementRecordDTO;
 import com.cqupt.mapper.*;
 import com.cqupt.pojo.*;
+import com.cqupt.service.PdfExportService;
 import com.cqupt.service.ReimbursementRecordService;
 import com.cqupt.utils.ResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,9 @@ public class ReimbursementRecordServiceImpl extends ServiceImpl<ReimbursementRec
 
     @Autowired
     private TreatmentItemOrderMapper treatmentItemOrderMapper;
+
+    @Autowired
+    private PdfExportService pdfExportService;
 
     /**
      * 计算报销相关费用
@@ -205,6 +209,60 @@ public class ReimbursementRecordServiceImpl extends ServiceImpl<ReimbursementRec
         if (calc == null) {
             throw new Exception("费用计算异常，无法完成报销");
         }
+
+        // 获取患者信息
+        Insureder insureder = insurederMapper.selectById(recordDTO.getPatientId());
+        if (insureder == null) {
+            throw new Exception("投保人信息不存在，无法完成报销");
+        }
+
+        // 在删除前获取所有订单信息用于PDF生成
+        QueryWrapper<DrugOrder> drugOrderQw = new QueryWrapper<>();
+        drugOrderQw.eq("patient_id", recordDTO.getPatientId());
+        List<DrugOrder> allDrugOrders = drugOrderMapper.selectList(drugOrderQw);
+
+        // 按药品类型分类
+        List<DrugOrder> drugAList = allDrugOrders.stream()
+                .filter(order -> {
+                    Drug drug = drugMapper.selectById(order.getDrugId());
+                    return drug != null && "甲类".equals(drug.getDrugType());
+                })
+                .collect(java.util.stream.Collectors.toList());
+
+        List<DrugOrder> drugBList = allDrugOrders.stream()
+                .filter(order -> {
+                    Drug drug = drugMapper.selectById(order.getDrugId());
+                    return drug != null && "乙类".equals(drug.getDrugType());
+                })
+                .collect(java.util.stream.Collectors.toList());
+
+        List<DrugOrder> drugCList = allDrugOrders.stream()
+                .filter(order -> {
+                    Drug drug = drugMapper.selectById(order.getDrugId());
+                    return drug != null && "丙类".equals(drug.getDrugType());
+                })
+                .collect(java.util.stream.Collectors.toList());
+
+        // 获取医疗服务订单
+        QueryWrapper<MedicalServiceOrder> serviceOrderQw = new QueryWrapper<>();
+        serviceOrderQw.eq("patient_id", recordDTO.getPatientId());
+        List<MedicalServiceOrder> serviceOrders = medicalServiceOrderMapper.selectList(serviceOrderQw);
+
+        // 获取诊疗项目订单
+        QueryWrapper<TreatmentItemOrder> itemOrderQw = new QueryWrapper<>();
+        itemOrderQw.eq("patient_id", recordDTO.getPatientId());
+        List<TreatmentItemOrder> itemOrders = treatmentItemOrderMapper.selectList(itemOrderQw);
+
+        // 生成PDF报销记录
+        String pdfFileName = null;
+        try {
+            pdfFileName = pdfExportService.generateReimbursementPdf(
+                    insureder, calc, drugAList, drugBList, drugCList, serviceOrders, itemOrders);
+        } catch (Exception e) {
+            // PDF生成失败不影响报销流程，只记录日志
+            System.err.println("PDF生成失败: " + e.getMessage());
+        }
+
         // 保存报销记录
         ReimbursementRecord record = new ReimbursementRecord();
         record.setPatientId(recordDTO.getPatientId());
@@ -215,15 +273,15 @@ public class ReimbursementRecordServiceImpl extends ServiceImpl<ReimbursementRec
         record.setReimbursableAmount(calc.getReimbursable());
         record.setReimbursementRatio(calc.getRatio());
         record.setReimbursementDate(LocalDateTime.now());
-        // ...其他字段赋值...
-        Insureder insureder = insurederMapper.selectById(recordDTO.getPatientId());
-        if (insureder == null) {
-            throw new Exception("投保人信息不存在，无法完成报销");
-        }
         record.setName(insureder.getName());
         record.setIdCard(insureder.getIdCard());
         record.setInpatientNo(insureder.getInpatientNo());
         record.setWorkStatus(insureder.getWorkStatus());
+
+        // 如果PDF生成成功，保存文件名
+        if (pdfFileName != null) {
+            record.setRemark("PDF文件: " + pdfFileName);
+        }
 
         int insert = reimbursementRecordMapper.insert(record);
         if (insert <= 0) {
@@ -252,6 +310,6 @@ public class ReimbursementRecordServiceImpl extends ServiceImpl<ReimbursementRec
             throw new Exception("删除院内明细失败");
         }
 
-        return ResultVo.ok("报销成功");
+        return ResultVo.ok("报销成功" + (pdfFileName != null ? "，PDF文件已生成：" + pdfFileName : ""));
     }
 }
