@@ -169,6 +169,7 @@ import { getTreatmentItemOrderPage } from "@/api/treatmentItemOrderApi.js";
 import { getReimbursementRatioPage, } from "@/api/reimbursementRatioApi.js";
 import { getEnabledDrugRbRatios } from "@/api/drugReimbursementRatioApi.js";
 import { calculateRb, confirmRb } from "@/api/reimbursementRecordApi.js";
+import { baseURL } from "@/request/request.js";
 
 
 import { use } from 'echarts/core';
@@ -510,9 +511,10 @@ const extractPdfFileName = (message) => {
 const downloadPdf = (fileName) => {
     try {
         console.log('开始下载PDF文件:', fileName);
+        console.log('使用baseURL:', baseURL);
 
-        // 创建下载URL
-        const downloadUrl = `http://localhost:9999/pdf/download/${encodeURIComponent(fileName)}`;
+        // 使用统一的baseURL
+        const downloadUrl = `${baseURL}/pdf/download/${encodeURIComponent(fileName)}`;
         console.log('下载URL:', downloadUrl);
 
         // 创建隐藏的下载链接
@@ -522,8 +524,12 @@ const downloadPdf = (fileName) => {
         link.style.display = 'none';
 
         document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        setTimeout(() => {
+            link.click();
+            setTimeout(() => {
+                document.body.removeChild(link);
+            }, 100);
+        }, 100);
 
         ElMessage.success('PDF文件开始下载');
 
@@ -531,7 +537,7 @@ const downloadPdf = (fileName) => {
         console.error('下载失败:', error);
 
         // 备用方案：直接打开新窗口
-        const downloadUrl = `http://localhost:9999/pdf/download/${encodeURIComponent(fileName)}`;
+        const downloadUrl = `${baseURL}/pdf/download/${encodeURIComponent(fileName)}`;
         try {
             window.open(downloadUrl, '_blank');
             ElMessage.info('已在新窗口打开下载链接');

@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 import com.cqupt.dto.ReimbursementRatioDTO;
 import com.cqupt.pojo.ReimbursementRatio;
-import com.cqupt.vo.InsurederVo;
 import com.cqupt.vo.ReimbursementRatioVo;
 
 /**

@@ -3,10 +3,15 @@ import qs from 'qs'
 import router from '../router'
 import { ElMessage } from 'element-plus'
 
+// 定义baseURL，默认为localhost:9999
+const baseURL = "http://localhost:9999";
+
 const instance = axios.create({
-    baseURL: "http://localhost:9999/",
+    baseURL: baseURL + "/",
 });
 
+// 导出baseURL供其他地方使用
+export { baseURL };
 export default instance;
 
 
